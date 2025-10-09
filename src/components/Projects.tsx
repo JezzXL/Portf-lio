@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Github } from 'lucide-react';
 import type { Project } from '../types';
-import dashboardImg from '../assets/dashboard.webp';
 
 const projects: Project[] = [
   {
@@ -12,7 +11,7 @@ const projects: Project[] = [
     technologies: ['React', 'TypeScript', 'Tailwind', 'Stripe'],
     github: 'https://github.com/joao/ecommerce',
     demo: 'https://demo-ecommerce.joao.dev',
-    image: 'https://via.placeholder.com/400x250/3B82F6/FFFFFF?text=E-commerce',
+    image: 'https://images.unsplash.com/photo-1557821552-17105176677c?w=800&h=500&fit=crop&q=80',
   },
   {
     id: 2,
@@ -21,7 +20,7 @@ const projects: Project[] = [
     technologies: ['React', 'TypeScript', 'Recharts', 'Tailwind'],
     github: 'https://github.com/JezzXL/Dashboard',
     demo: 'https://dashboard-woad-nu.vercel.app/',
-    image: dashboardImg,
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop&q=80',
   },
   {
     id: 3,
