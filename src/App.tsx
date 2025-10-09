@@ -31,7 +31,6 @@ function App() {
     }
   }, []);
 
-  // Aplica tema ao documento
   useEffect(() => {
     localStorage.setItem('theme', theme);
     document.documentElement.classList.toggle('dark', theme === 'dark');
@@ -46,7 +45,6 @@ function App() {
       <Header currentTheme={theme} onThemeToggle={toggleTheme} />
       
       <main>
-        {/* Todas as seções na mesma página */}
         <Hero />
         <About />
         <Projects />

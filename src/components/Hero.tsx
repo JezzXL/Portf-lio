@@ -84,7 +84,7 @@ const Hero = () => {
           >
             Desenvolvedor{' '}
             <span className="font-semibold text-blue-600 dark:text-blue-400">
-              Full-Stack
+              Front end
             </span>{' '}
             apaixonado por criar experiências digitais incríveis com React,
             TypeScript e tecnologias modernas.

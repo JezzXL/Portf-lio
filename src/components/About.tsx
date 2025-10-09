@@ -3,9 +3,9 @@ import { Briefcase, GraduationCap, Code2, Award } from 'lucide-react';
 import type { Skill } from '../types';
 
 const skills: Skill[] = [
-  { name: 'React', level: 'advanced' },
-  { name: 'TypeScript', level: 'advanced' },
-  { name: 'Tailwind CSS', level: 'advanced' },
+  { name: 'React', level: 'intermediate' },
+  { name: 'TypeScript', level: 'intermediate' },
+  { name: 'Tailwind CSS', level: 'intermediate' },
   { name: 'Node.js', level: 'intermediate' },
   { name: 'MongoDB', level: 'intermediate' },
   { name: 'Git & GitHub', level: 'advanced' },
@@ -40,33 +40,32 @@ const About = () => {
     {
       icon: Briefcase,
       title: 'Experiência',
-      description: 'Freelancer e Dev na TechCorp',
-      detail: '2020-2023',
+      description: 'Designer Gráfico - Freelancer ',
+      detail: '2022-2024',
     },
     {
       icon: GraduationCap,
       title: 'Educação',
-      description: 'Engenharia de Software',
-      detail: 'USP',
+      description: 'Analise e Desenvolvimento de Sistemas',
+      detail: 'Uniasselvi',
     },
     {
       icon: Code2,
       title: 'Projetos',
-      description: '50+ projetos concluídos',
+      description: '2+ projetos concluídos',
       detail: 'Web & Mobile',
     },
     {
       icon: Award,
       title: 'Certificações',
-      description: 'React & TypeScript',
-      detail: 'Profissional',
+      description: '',
+      detail: 'HTML, CSS, JavaScript, React, TypeScript',
     },
   ];
 
   return (
     <section id="about" className="py-20 bg-white dark:bg-gray-900 transition-colors">
       <div className="max-w-6xl mx-auto px-4">
-        {/* Título da Seção */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -79,9 +78,8 @@ const About = () => {
           <div className="w-20 h-1 bg-blue-600 dark:bg-blue-400 mx-auto rounded-full"></div>
         </motion.div>
 
-        {/* Grid Principal */}
         <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Coluna Esquerda - Descrição */}
+
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -94,19 +92,15 @@ const About = () => {
                 <span className="font-semibold text-blue-600 dark:text-blue-400">
                   desenvolvedor web
                 </span>{' '}
-                com 5+ anos de experiência, focado em frontend e full-stack.
+                focado em frontend.
                 Adoro transformar ideias em produtos digitais escaláveis e
                 user-friendly.
               </p>
               <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                Formado em Engenharia de Software, sempre em busca de novos
-                desafios e tecnologias emergentes. Acredito que código limpo e
-                boas práticas são fundamentais para o sucesso de qualquer
-                projeto.
+                Formado em Análise e Desenvolvimento de Sistemas, atuo como desenvolvedor frontend com foco em criar interfaces modernas, funcionais e centradas no usuário.
               </p>
             </div>
 
-            {/* Cards de Destaque */}
             <div className="grid grid-cols-2 gap-4 pt-4">
               {highlights.map((item, index) => {
                 const Icon = item.icon;
@@ -134,7 +128,6 @@ const About = () => {
             </div>
           </motion.div>
 
-          {/* Coluna Direita - Skills */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -174,7 +167,6 @@ const About = () => {
               ))}
             </div>
 
-            {/* Legenda */}
             <div className="pt-4 flex gap-4 text-xs text-gray-600 dark:text-gray-400">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-green-500"></div>

@@ -5,7 +5,7 @@ export interface Project {
   technologies: string[];
   github: string;
   demo?: string;
-  image: string; // URL de imagem placeholder
+  image: string;
 }
 export interface Skill {
   name: string;

@@ -1,25 +1,44 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Linkedin, Github, } from 'lucide-react';
+import { Mail, Linkedin, Github, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simula envio (integre com EmailJS aqui)
-    console.log('Formulário enviado:', formData);
-    alert('Mensagem enviada com sucesso! (Demo)');
-    setFormData({ name: '', email: '', message: '' });
-    setIsSubmitted(true);
-    
-    // Remove mensagem de sucesso após 3 segundos
-    setTimeout(() => setIsSubmitted(false), 3000);
+    setStatus('sending');
+
+    try {
+      // EMAILJS
+      await emailjs.send(
+        'service_mq5f41t',      // Service ID
+        'template_g614yim',     // Template ID
+        {
+          from_name: formData.name,
+          reply_to: formData.email,
+          message: formData.message,
+          to_email: 'davydsantos.gt@gmail.com', // email
+        },
+        'LY3V6hJicNfrgxqFq'       // Public Key
+      );
+
+      setStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+      
+      setTimeout(() => setStatus('idle'), 5000);
+    } catch (error) {
+      console.error('Erro ao enviar email:', error);
+      setStatus('error');
+      
+      setTimeout(() => setStatus('idle'), 5000);
+    }
   };
 
   const socialLinks = [
@@ -46,7 +65,6 @@ const Contact = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12">
-          {/* Formulário */}
           <motion.form
             onSubmit={handleSubmit}
             initial={{ opacity: 0, x: -50 }}
@@ -61,7 +79,8 @@ const Contact = () => {
               value={formData.name}
               onChange={handleChange}
               required
-              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              disabled={status === 'sending'}
+              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
             />
             <input
               type="email"
@@ -70,7 +89,8 @@ const Contact = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              disabled={status === 'sending'}
+              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
             />
             <textarea
               name="message"
@@ -79,26 +99,55 @@ const Contact = () => {
               value={formData.message}
               onChange={handleChange}
               required
-              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+              disabled={status === 'sending'}
+              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none disabled:opacity-50 disabled:cursor-not-allowed"
             />
+            
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+              disabled={status === 'sending'}
+              className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Enviar Mensagem
+              {status === 'sending' ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Enviando...
+                </>
+              ) : (
+                <>
+                  <Send size={20} />
+                  Enviar Mensagem
+                </>
+              )}
             </button>
-            {isSubmitted && (
-              <motion.p
+
+            {status === 'success' && (
+              <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-green-600 dark:text-green-400 text-center font-semibold"
+                className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg flex items-center gap-3"
               >
-                ✓ Mensagem enviada com sucesso!
-              </motion.p>
+                <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0" />
+                <p className="text-green-700 dark:text-green-300 font-medium text-sm">
+                  Mensagem enviada com sucesso! Responderei em breve.
+                </p>
+              </motion.div>
+            )}
+
+            {status === 'error' && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-center gap-3"
+              >
+                <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0" />
+                <p className="text-red-700 dark:text-red-300 font-medium text-sm">
+                  Erro ao enviar. Tente novamente ou envie um email direto.
+                </p>
+              </motion.div>
             )}
           </motion.form>
 
-          {/* Informações de Contato */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -117,7 +166,7 @@ const Contact = () => {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center space-x-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                    className="flex items-center space-x-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"
                   >
                     <Icon size={20} className="text-blue-600 dark:text-blue-400" />
                     <span>{link.label}</span>
@@ -126,14 +175,18 @@ const Contact = () => {
               })}
             </div>
 
-            {/* Card de Disponibilidade */}
             <div className="mt-8 p-6 bg-blue-50 dark:bg-gray-800 rounded-lg border border-blue-200 dark:border-gray-700">
-              <h4 className="font-semibold text-gray-800 dark:text-white mb-2">
-                💼 Disponível para Freelance
-              </h4>
-              <p className="text-gray-600 dark:text-gray-400 text-sm">
-                Atualmente aceitando novos projetos. Respondo em até 24 horas!
-              </p>
+              <div className="flex items-start gap-3">
+                <div className="w-3 h-3 bg-green-500 rounded-full mt-1 animate-pulse" />
+                <div>
+                  <h4 className="font-semibold text-gray-800 dark:text-white mb-2">
+                    💼 Disponível para trabalho
+                  </h4>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">
+                    Atualmente aceitando novos projetos. Respondo em até 24 horas!
+                  </p>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>

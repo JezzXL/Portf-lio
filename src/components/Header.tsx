@@ -42,7 +42,6 @@ const Header = ({ currentTheme, onThemeToggle }: HeaderProps) => {
   return (
     <header className="fixed top-0 w-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-md z-50 transition-colors">
       <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-        {/* Logo */}
         <button
           onClick={scrollToTop}
           className="text-2xl font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
@@ -50,7 +49,6 @@ const Header = ({ currentTheme, onThemeToggle }: HeaderProps) => {
           Davyd Developer
         </button>
         
-        {/* Desktop Nav */}
         <nav className="hidden md:flex items-center space-x-6">
           {navItems.map((item) => (
             <button
@@ -62,7 +60,6 @@ const Header = ({ currentTheme, onThemeToggle }: HeaderProps) => {
             </button>
           ))}
           
-          {/* Theme Toggle Button */}
           <button
             onClick={onThemeToggle}
             className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
@@ -76,7 +73,6 @@ const Header = ({ currentTheme, onThemeToggle }: HeaderProps) => {
           </button>
         </nav>
 
-        {/* Mobile Menu Button & Theme Toggle */}
         <div className="md:hidden flex items-center space-x-2">
           <button
             onClick={onThemeToggle}
