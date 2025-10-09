@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Github } from 'lucide-react';
 import type { Project } from '../types';
-import dashboardImg from '.src/assets/dashboard.png';
+import dashboardImg from '../assets/dashboard.webp';
 
 const projects: Project[] = [
   {
