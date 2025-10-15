@@ -5,11 +5,10 @@ import type { Project } from '../types';
 const projects: Project[] = [
   {
     id: 1,
-    title: 'E-commerce App',
+    title: 'E-commerce',
     description: 'Uma loja online completa com carrinho de compras, integração de pagamentos e painel administrativo.',
-    technologies: ['React', 'TypeScript', 'Tailwind', 'Stripe'],
-    github: 'https://github.com/JezzXL/ecommerce',
-    demo: 'https://demo-ecommerce.dev',
+    technologies: ['React', 'TypeScript', 'Tailwind', 'Zustand'],
+    github: 'https://github.com/JezzXL/TechStore-E-commerce',
     image: 'https://images.unsplash.com/photo-1557821552-17105176677c?w=800&h=500&fit=crop&q=80',
   },
   {
@@ -27,7 +26,6 @@ const projects: Project[] = [
     description: 'Blog moderno com CMS headless, SEO otimizado e sistema de comentários.',
     technologies: ['Next.js', 'TypeScript', 'Strapi', 'Tailwind'],
     github: 'https://github.com/JezzXL/blog',
-    demo: 'https://blog.dev',
     image: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&h=500&fit=crop&q=80',
   },
   {
@@ -44,7 +42,6 @@ const projects: Project[] = [
     description: 'Plataforma de agendamento online com calendário interativo e notificações automáticas.',
     technologies: ['Vue.js', 'Node.js', 'MongoDB', 'Socket.io'],
     github: 'https://github.com/JezzXL/booking-system',
-    demo: 'https://booking.dev',
     image: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=800&h=500&fit=crop&q=80',
   },
   {
