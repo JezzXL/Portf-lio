@@ -9,6 +9,7 @@ const projects: Project[] = [
     description: 'Uma loja online completa com carrinho de compras, integração de pagamentos e painel administrativo.',
     technologies: ['React', 'TypeScript', 'Tailwind', 'Zustand'],
     github: 'https://github.com/JezzXL/TechStore-E-commerce',
+    demo: 'https://tech-store-e-commerce-blue.vercel.app/',
     image: 'https://images.unsplash.com/photo-1557821552-17105176677c?w=800&h=500&fit=crop&q=80',
   },
   {
