@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react';
+import { ArrowRight, Github, Linkedin, Mail, FileText } from 'lucide-react';
 
 const Hero = () => {
   const socialLinks = [
@@ -104,6 +104,15 @@ const Hero = () => {
               Ver Meus Projetos
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
+
+            <a 
+            href="/Davyd-WebDeveloper.pdf"
+            download="curriculo-davyd-developer.pdf"
+            className='inline-flex items-center px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-500 dark:to-pink-500 text-white rounded-full hover:from-purple-700 hover:to-pink-700 dark:hover:from-purple-600 dark:hover:to-pink-600 transition-all hover:scale-105 shadow-lg hover:shadow-xl font-semibold'
+            >
+              <FileText className="mr-2 w-5 h-5" />
+              Baixar currículo
+            </a>
 
             <button
               onClick={scrollToContact}

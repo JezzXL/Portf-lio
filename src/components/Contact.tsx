@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Linkedin, Github, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Mail, Linkedin, Github, Send, CheckCircle, AlertCircle, FileText } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
 const Contact = () => {
@@ -42,9 +42,10 @@ const Contact = () => {
   };
 
   const socialLinks = [
-    { icon: Mail, label: 'davydsantos.gt@gmail.com', href: 'mailto:davydsantos.gt@gmail.com' },
-    { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/davydwillianp/' },
-    { icon: Github, label: 'GitHub', href: 'https://github.com/JezzXL' },
+    { icon: Mail, label: 'davydsantos.gt@gmail.com', href: 'mailto:davydsantos.gt@gmail.com', isDownload: false },
+    { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/davydwillianp/', isDownload: false },
+    { icon: Github, label: 'GitHub', href: 'https://github.com/JezzXL', isDownload: false },
+    { icon: FileText, label: 'Baixar Currículo (PDF)', href: '/Davyd-WebDeveloper.pdf', isDownload: true },
   ];
 
   return (
@@ -164,11 +165,14 @@ const Contact = () => {
                   <a
                     key={link.label}
                     href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center space-x-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"
+                    target={link.isDownload ? undefined : "_blank"}
+                    rel={link.isDownload ? undefined : "noopener noreferrer"}
+                    download={link.isDownload ? "Davyd_Developer_Curriculo.pdf" : undefined}
+                    className={`flex items-center space-x-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 ${
+                      link.isDownload ? 'font-semibold border-2 border-dashed border-purple-300 dark:border-purple-700 bg-purple-50/50 dark:bg-purple-900/10' : ''
+                    }`}
                   >
-                    <Icon size={20} className="text-blue-600 dark:text-blue-400" />
+                    <Icon size={20} className={link.isDownload ? "text-purple-600 dark:text-purple-400" : "text-blue-600 dark:text-blue-400"} />
                     <span>{link.label}</span>
                   </a>
                 );
