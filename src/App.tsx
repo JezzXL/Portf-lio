@@ -20,7 +20,7 @@ const Footer = () => (
 function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
-  // Carrega tema salvo ou detecta preferência do sistema
+  // Carrega tema salvo
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
     

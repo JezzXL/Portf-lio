@@ -23,11 +23,11 @@ const projects: Project[] = [
   },
   {
     id: 3,
-    title: 'Blog Pessoal',
-    description: 'Blog moderno com CMS headless, SEO otimizado e sistema de comentários.',
-    technologies: ['Next.js', 'TypeScript', 'Strapi', 'Tailwind'],
-    github: 'https://github.com/JezzXL/blog',
-    image: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&h=500&fit=crop&q=80',
+    title: 'Task Flow',
+    description: 'Aplicativo para gerenciamento de tarefas com integração de calendário e notificações.',
+    technologies: ['React 19', 'TypeScript', 'Tailwind CSS', 'Zustand', '@dnd-kit'],
+    github: 'https://github.com/JezzXL/TaskFlow',
+    image: 'https://raw.githubusercontent.com/JezzXL/TaskFlow/refs/heads/main/screenshots/login.PNG',
   },
   {
     id: 4,
