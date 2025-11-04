@@ -10,7 +10,7 @@ const projects: Project[] = [
     technologies: ['React', 'TypeScript', 'Tailwind', 'Zustand'],
     github: 'https://github.com/JezzXL/TechStore-E-commerce',
     demo: 'https://tech-store-e-commerce-blue.vercel.app/',
-    image: 'https://images.unsplash.com/photo-1557821552-17105176677c?w=800&h=500&fit=crop&q=80',
+    image: 'https://raw.githubusercontent.com/JezzXL/TechStore-E-commerce/refs/heads/main/screenshots/home.png',
   },
   {
     id: 2,
@@ -19,14 +19,15 @@ const projects: Project[] = [
     technologies: ['React', 'TypeScript', 'Recharts', 'Tailwind'],
     github: 'https://github.com/JezzXL/dashboard',
     demo: 'https://dashboard-woad-nu.vercel.app/',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop&q=80',
+    image: 'https://raw.githubusercontent.com/JezzXL/Dashboard/refs/heads/main/screenshots/dashboard.PNG',
   },
   {
     id: 3,
     title: 'Task Flow',
     description: 'Aplicativo para gerenciamento de tarefas com integração de calendário e notificações.',
     technologies: ['React 19', 'TypeScript', 'Tailwind CSS', 'Zustand', '@dnd-kit'],
-    github: 'https://github.com/JezzXL/TaskFlow',
+    github: 'https://github.com/JezzXL/TaskFlow', 
+    demo: 'https://taskflow-nu-one.vercel.app/',
     image: 'https://raw.githubusercontent.com/JezzXL/TaskFlow/refs/heads/main/screenshots/login.PNG',
   },
   {
