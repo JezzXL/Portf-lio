@@ -52,7 +52,7 @@ const About = () => {
     {
       icon: Code2,
       title: 'Projetos',
-      description: '2+ projetos concluídos',
+      description: '4+ projetos concluídos',
       detail: 'Web & Mobile',
     },
     {

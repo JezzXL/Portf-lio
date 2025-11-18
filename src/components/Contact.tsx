@@ -167,7 +167,7 @@ const Contact = () => {
                     href={link.href}
                     target={link.isDownload ? undefined : "_blank"}
                     rel={link.isDownload ? undefined : "noopener noreferrer"}
-                    download={link.isDownload ? "Davyd_Developer_Curriculo.pdf" : undefined}
+                    download={link.isDownload ? "DavydWillian-WebDeveloper.pdf" : undefined}
                     className={`flex items-center space-x-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 ${
                       link.isDownload ? 'font-semibold border-2 border-dashed border-purple-300 dark:border-purple-700 bg-purple-50/50 dark:bg-purple-900/10' : ''
                     }`}
