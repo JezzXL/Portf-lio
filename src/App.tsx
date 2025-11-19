@@ -7,10 +7,10 @@ import Contact from './components/Contact';
 import WhatsAppButton from './components/WhatsAppButton';
 
 const Footer = () => (
-  <footer className="bg-gray-800 dark:bg-gray-950 text-white py-8 border-t border-gray-700">
+  <footer className="bg-[#292929] dark:bg-[#000000] text-white py-8 border-t border-[#535353] dark:border-[#292929]">
     <div className="max-w-6xl mx-auto px-4 text-center">
-      <p>&copy; {new Date().getFullYear()} Davyd Developer. Todos os direitos reservados.</p>
-      <p className="mt-2 text-sm text-gray-400">
+      <p className="text-[#a5a5a5]">&copy; {new Date().getFullYear()} Davyd Developer. Todos os direitos reservados.</p>
+      <p className="mt-2 text-sm text-[#7c7c7c]">
         Feito com ❤️ usando React, TypeScript e Tailwind CSS
       </p>
     </div>
@@ -42,7 +42,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
+    <div className="min-h-screen bg-[#a5a5a5]/10 dark:bg-[#000000] transition-colors">
       <Header currentTheme={theme} onThemeToggle={toggleTheme} />
       
       <main>
