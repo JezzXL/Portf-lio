@@ -46,7 +46,7 @@ const Hero = () => {
   return (
     <section 
       id="hero" 
-      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 pt-20 transition-colors"
+      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#a5a5a5]/20 via-[#7c7c7c]/10 to-[#535353]/20 dark:from-[#000000] dark:via-[#292929] dark:to-[#000000] pt-20 transition-colors"
     >
       <div className="max-w-5xl mx-auto px-4 text-center">
         <motion.div
@@ -62,15 +62,15 @@ const Hero = () => {
             transition={{ delay: 0.2 }}
             className="inline-block"
           >
-            <span className="px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium">
+            <span className="px-4 py-2 bg-[#535353]/20 dark:bg-[#535353]/30 text-[#000000] dark:text-[#a5a5a5] rounded-full text-sm font-medium border border-[#7c7c7c]/30 dark:border-[#535353]">
               👋 Disponível para novos projetos
             </span>
           </motion.div>
 
           {/* Título Principal */}
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-gray-900 dark:text-white leading-tight">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-[#000000] dark:text-white leading-tight">
             Olá, eu sou{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#535353] to-[#000000] dark:from-[#7c7c7c] dark:to-[#a5a5a5]">
               Davyd Developer
             </span>
           </h1>
@@ -80,10 +80,10 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
+            className="text-xl md:text-2xl text-[#535353] dark:text-[#a5a5a5] max-w-3xl mx-auto"
           >
             Desenvolvedor{' '}
-            <span className="font-semibold text-blue-600 dark:text-blue-400">
+            <span className="font-semibold text-[#000000] dark:text-[#7c7c7c]">
               Front end
             </span>{' '}
             apaixonado por criar experiências digitais incríveis com React,
@@ -99,7 +99,7 @@ const Hero = () => {
           >
             <button
               onClick={scrollToProjects}
-              className="group inline-flex items-center px-8 py-4 bg-blue-600 dark:bg-blue-500 text-white rounded-full hover:bg-blue-700 dark:hover:bg-blue-600 transition-all hover:scale-105 shadow-lg hover:shadow-xl font-semibold"
+              className="group inline-flex items-center px-8 py-4 bg-[#000000] dark:bg-[#535353] text-white rounded-full hover:bg-[#292929] dark:hover:bg-[#7c7c7c] transition-all hover:scale-105 shadow-lg hover:shadow-xl font-semibold"
             >
               Ver Meus Projetos
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -108,7 +108,7 @@ const Hero = () => {
             <a 
             href="/davyd_developer_curriculo.pdf"
             download="DavydWillian-WebDeveloper.pdf"
-            className='inline-flex items-center px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-500 dark:to-pink-500 text-white rounded-full hover:from-purple-700 hover:to-pink-700 dark:hover:from-purple-600 dark:hover:to-pink-600 transition-all hover:scale-105 shadow-lg hover:shadow-xl font-semibold'
+            className='inline-flex items-center px-8 py-4 bg-gradient-to-r from-[#292929] to-[#535353] dark:from-[#535353] dark:to-[#7c7c7c] text-white rounded-full hover:from-[#000000] hover:to-[#292929] dark:hover:from-[#7c7c7c] dark:hover:to-[#a5a5a5] transition-all hover:scale-105 shadow-lg hover:shadow-xl font-semibold'
             >
               <FileText className="mr-2 w-5 h-5" />
               Baixar currículo
@@ -116,7 +116,7 @@ const Hero = () => {
 
             <button
               onClick={scrollToContact}
-              className="inline-flex items-center px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-2 border-gray-300 dark:border-gray-600 rounded-full hover:border-blue-600 dark:hover:border-blue-400 transition-all hover:scale-105 shadow-lg hover:shadow-xl font-semibold"
+              className="inline-flex items-center px-8 py-4 bg-white dark:bg-[#292929] text-[#000000] dark:text-white border-2 border-[#535353] dark:border-[#535353] rounded-full hover:border-[#000000] dark:hover:border-[#7c7c7c] hover:bg-[#a5a5a5]/10 dark:hover:bg-[#535353] transition-all hover:scale-105 shadow-lg hover:shadow-xl font-semibold"
             >
               Entre em Contato
             </button>
@@ -137,7 +137,7 @@ const Hero = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 bg-white dark:bg-gray-800 rounded-full shadow-md hover:shadow-lg hover:scale-110 transition-all text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                  className="p-3 bg-white dark:bg-[#292929] rounded-full shadow-md hover:shadow-lg hover:scale-110 transition-all text-[#535353] dark:text-[#a5a5a5] hover:text-[#000000] dark:hover:text-white border border-[#a5a5a5]/30 dark:border-[#535353]"
                   aria-label={social.label}
                 >
                   <Icon size={24} />
@@ -154,14 +154,14 @@ const Hero = () => {
             className="pt-12 cursor-pointer"
             onClick={scrollToContent}
           >
-            <div className="flex flex-col items-center text-gray-400 dark:text-gray-600">
+            <div className="flex flex-col items-center text-[#7c7c7c] dark:text-[#535353]">
               <span className="text-sm mb-2">Scroll para descobrir mais</span>
               <motion.div
                 animate={{ y: [0, 10, 0] }}
                 transition={{ repeat: Infinity, duration: 1.5 }}
               >
-                <div className="w-6 h-10 border-2 border-gray-400 dark:border-gray-600 rounded-full flex justify-center">
-                  <div className="w-1 h-3 bg-gray-400 dark:bg-gray-600 rounded-full mt-2" />
+                <div className="w-6 h-10 border-2 border-[#7c7c7c] dark:border-[#535353] rounded-full flex justify-center">
+                  <div className="w-1 h-3 bg-[#7c7c7c] dark:bg-[#535353] rounded-full mt-2" />
                 </div>
               </motion.div>
             </div>

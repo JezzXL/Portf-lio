@@ -5,8 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 const WhatsAppButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   
-  // Substitua pelo seu número com código do país (sem espaços ou caracteres especiais)
-  // Exemplo: 5598912345678 (55 = Brasil, 98 = DDD, 912345678 = número)
   const phoneNumber = '5598970105056';
   const message = 'Olá! Vi seu portfólio e gostaria de conversar sobre oportunidades.';
   
@@ -23,7 +21,7 @@ const WhatsAppButton = () => {
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="group relative w-16 h-16 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 flex items-center justify-center"
+          className="group relative w-16 h-16 bg-[#535353] hover:bg-[#7c7c7c] dark:bg-[#292929] dark:hover:bg-[#535353] text-white rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 flex items-center justify-center"
           aria-label="WhatsApp"
         >
           <AnimatePresence mode="wait">
@@ -52,7 +50,7 @@ const WhatsAppButton = () => {
           
           {/* Pulse Animation */}
           {!isOpen && (
-            <span className="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-75" />
+            <span className="absolute inset-0 rounded-full bg-[#535353] dark:bg-[#292929] animate-ping opacity-75" />
           )}
         </button>
 
@@ -62,11 +60,11 @@ const WhatsAppButton = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1.5 }}
-            className="absolute right-20 top-1/2 -translate-y-1/2 bg-gray-900 dark:bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg whitespace-nowrap text-sm font-medium hidden md:block"
+            className="absolute right-20 top-1/2 -translate-y-1/2 bg-[#292929] dark:bg-[#000000] text-white px-4 py-2 rounded-lg shadow-lg whitespace-nowrap text-sm font-medium hidden md:block border border-[#535353]"
           >
             Fale comigo no WhatsApp
             <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full">
-              <div className="border-8 border-transparent border-l-gray-900 dark:border-l-gray-800" />
+              <div className="border-8 border-transparent border-l-[#292929] dark:border-l-[#000000]" />
             </div>
           </motion.div>
         )}
@@ -80,29 +78,29 @@ const WhatsAppButton = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            className="fixed bottom-28 right-6 z-50 w-80 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden"
+            className="fixed bottom-28 right-6 z-50 w-80 bg-white dark:bg-[#292929] rounded-2xl shadow-2xl overflow-hidden border border-[#a5a5a5]/30 dark:border-[#535353]"
           >
             {/* Header */}
-            <div className="bg-green-500 p-4 flex items-center gap-3">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                <MessageCircle size={24} className="text-green-500" />
+            <div className="bg-[#535353] dark:bg-[#000000] p-4 flex items-center gap-3">
+              <div className="w-12 h-12 bg-white dark:bg-[#292929] rounded-full flex items-center justify-center">
+                <MessageCircle size={24} className="text-[#535353] dark:text-[#7c7c7c]" />
               </div>
               <div>
                 <h3 className="text-white font-semibold">Davyd Developer</h3>
-                <p className="text-green-100 text-xs">Geralmente responde em minutos</p>
+                <p className="text-[#a5a5a5] text-xs">Geralmente responde em minutos</p>
               </div>
             </div>
 
             {/* Body */}
             <div className="p-5 space-y-4">
-              <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3">
-                <p className="text-gray-700 dark:text-gray-300 text-sm">
+              <div className="bg-[#a5a5a5]/20 dark:bg-[#535353]/30 rounded-lg p-3">
+                <p className="text-[#000000] dark:text-[#a5a5a5] text-sm">
                   👋 Olá! Como posso ajudar você?
                 </p>
               </div>
 
               <div className="space-y-2">
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
+                <p className="text-[#535353] dark:text-[#a5a5a5] text-sm">
                   Envie uma mensagem para iniciar uma conversa:
                 </p>
                 
@@ -110,14 +108,14 @@ const WhatsAppButton = () => {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors text-center"
+                  className="block w-full bg-[#535353] hover:bg-[#7c7c7c] dark:bg-[#535353] dark:hover:bg-[#7c7c7c] text-white font-semibold py-3 px-4 rounded-lg transition-colors text-center"
                 >
                   Iniciar Conversa
                 </a>
               </div>
 
-              <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+              <div className="flex items-center gap-2 text-xs text-[#7c7c7c] dark:text-[#a5a5a5]">
+                <div className="w-2 h-2 bg-[#535353] dark:bg-[#7c7c7c] rounded-full animate-pulse" />
                 <span>Online agora</span>
               </div>
             </div>

@@ -16,11 +16,11 @@ const skills: Skill[] = [
 const getLevelStyle = (level: string) => {
   switch (level) {
     case 'advanced':
-      return 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300';
+      return 'bg-[#535353]/20 dark:bg-[#535353]/40 text-[#000000] dark:text-[#a5a5a5] border border-[#535353]/30';
     case 'intermediate':
-      return 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300';
+      return 'bg-[#7c7c7c]/20 dark:bg-[#7c7c7c]/30 text-[#292929] dark:text-[#7c7c7c] border border-[#7c7c7c]/30';
     default:
-      return 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300';
+      return 'bg-[#a5a5a5]/20 dark:bg-[#292929] text-[#535353] dark:text-[#a5a5a5] border border-[#a5a5a5]/30';
   }
 };
 
@@ -64,7 +64,7 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-20 bg-white dark:bg-gray-900 transition-colors">
+    <section id="about" className="py-20 bg-white dark:bg-[#000000] transition-colors">
       <div className="max-w-6xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -72,10 +72,10 @@ const About = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-[#000000] dark:text-white mb-4">
             Sobre Mim
           </h2>
-          <div className="w-20 h-1 bg-blue-600 dark:bg-blue-400 mx-auto rounded-full"></div>
+          <div className="w-20 h-1 bg-[#535353] dark:bg-[#7c7c7c] mx-auto rounded-full"></div>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-start">
@@ -87,16 +87,16 @@ const About = () => {
             className="space-y-6"
           >
             <div className="prose prose-lg dark:prose-invert">
-              <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+              <p className="text-lg text-[#535353] dark:text-[#a5a5a5] leading-relaxed">
                 Sou um{' '}
-                <span className="font-semibold text-blue-600 dark:text-blue-400">
+                <span className="font-semibold text-[#000000] dark:text-[#7c7c7c]">
                   desenvolvedor web
                 </span>{' '}
                 focado em frontend.
                 Adoro transformar ideias em produtos digitais escaláveis e
                 user-friendly.
               </p>
-              <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+              <p className="text-lg text-[#535353] dark:text-[#a5a5a5] leading-relaxed">
                 Formado em Análise e Desenvolvimento de Sistemas, atuo como desenvolvedor frontend com foco em criar interfaces modernas, funcionais e centradas no usuário.
               </p>
             </div>
@@ -110,16 +110,16 @@ const About = () => {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 transition-colors"
+                    className="p-4 bg-[#a5a5a5]/10 dark:bg-[#292929] rounded-lg border border-[#a5a5a5]/30 dark:border-[#535353] hover:border-[#535353] dark:hover:border-[#7c7c7c] transition-colors"
                   >
-                    <Icon className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
-                    <h4 className="font-semibold text-gray-900 dark:text-white text-sm mb-1">
+                    <Icon className="w-8 h-8 text-[#535353] dark:text-[#7c7c7c] mb-2" />
+                    <h4 className="font-semibold text-[#000000] dark:text-white text-sm mb-1">
                       {item.title}
                     </h4>
-                    <p className="text-xs text-gray-600 dark:text-gray-400">
+                    <p className="text-xs text-[#7c7c7c] dark:text-[#a5a5a5]">
                       {item.description}
                     </p>
-                    <p className="text-xs text-blue-600 dark:text-blue-400 font-medium mt-1">
+                    <p className="text-xs text-[#535353] dark:text-[#7c7c7c] font-medium mt-1">
                       {item.detail}
                     </p>
                   </motion.div>
@@ -135,8 +135,8 @@ const About = () => {
             className="space-y-6"
           >
             <div className="flex items-center gap-3 mb-6">
-              <Code2 className="w-8 h-8 text-blue-600 dark:text-blue-400" />
-              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
+              <Code2 className="w-8 h-8 text-[#535353] dark:text-[#7c7c7c]" />
+              <h3 className="text-2xl font-semibold text-[#000000] dark:text-white">
                 Habilidades Técnicas
               </h3>
             </div>
@@ -149,10 +149,10 @@ const About = () => {
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.05 }}
                   whileHover={{ scale: 1.05 }}
-                  className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition-all border border-gray-200 dark:border-gray-700"
+                  className="bg-white dark:bg-[#292929] p-4 rounded-lg shadow-md hover:shadow-lg transition-all border border-[#a5a5a5]/30 dark:border-[#535353]"
                 >
                   <div className="flex flex-col space-y-2">
-                    <span className="font-semibold text-gray-900 dark:text-white text-sm">
+                    <span className="font-semibold text-[#000000] dark:text-white text-sm">
                       {skill.name}
                     </span>
                     <span
@@ -167,13 +167,13 @@ const About = () => {
               ))}
             </div>
 
-            <div className="pt-4 flex gap-4 text-xs text-gray-600 dark:text-gray-400">
+            <div className="pt-4 flex gap-4 text-xs text-[#7c7c7c] dark:text-[#a5a5a5]">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                <div className="w-3 h-3 rounded-full bg-[#535353] dark:bg-[#7c7c7c]"></div>
                 <span>Avançado</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div className="w-3 h-3 rounded-full bg-[#7c7c7c] dark:bg-[#a5a5a5]"></div>
                 <span>Intermediário</span>
               </div>
             </div>

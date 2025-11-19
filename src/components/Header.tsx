@@ -19,7 +19,7 @@ const Header = ({ currentTheme, onThemeToggle }: HeaderProps) => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      const headerOffset = 80; // Altura do header fixo
+      const headerOffset = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
@@ -40,11 +40,11 @@ const Header = ({ currentTheme, onThemeToggle }: HeaderProps) => {
   };
 
   return (
-    <header className="fixed top-0 w-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-md z-50 transition-colors">
+    <header className="fixed top-0 w-full bg-white/90 dark:bg-[#292929]/90 backdrop-blur-md shadow-md z-50 transition-colors">
       <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
         <button
           onClick={scrollToTop}
-          className="text-2xl font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+          className="text-2xl font-bold text-[#535353] dark:text-[#a5a5a5] hover:text-[#7c7c7c] dark:hover:text-white transition-colors"
         >
           Davyd Developer
         </button>
@@ -54,7 +54,7 @@ const Header = ({ currentTheme, onThemeToggle }: HeaderProps) => {
             <button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
+              className="text-[#535353] dark:text-[#a5a5a5] hover:text-[#000000] dark:hover:text-white transition-colors font-medium"
             >
               {item.label}
             </button>
@@ -62,13 +62,13 @@ const Header = ({ currentTheme, onThemeToggle }: HeaderProps) => {
           
           <button
             onClick={onThemeToggle}
-            className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+            className="p-2 rounded-lg bg-[#a5a5a5]/20 dark:bg-[#535353] hover:bg-[#a5a5a5]/30 dark:hover:bg-[#7c7c7c] transition-colors"
             aria-label="Toggle theme"
           >
             {currentTheme === 'dark' ? (
-              <Sun size={20} className="text-yellow-500" />
+              <Sun size={20} className="text-[#a5a5a5]" />
             ) : (
-              <Moon size={20} className="text-gray-700" />
+              <Moon size={20} className="text-[#535353]" />
             )}
           </button>
         </nav>
@@ -76,25 +76,25 @@ const Header = ({ currentTheme, onThemeToggle }: HeaderProps) => {
         <div className="md:hidden flex items-center space-x-2">
           <button
             onClick={onThemeToggle}
-            className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+            className="p-2 rounded-lg bg-[#a5a5a5]/20 dark:bg-[#535353] hover:bg-[#a5a5a5]/30 dark:hover:bg-[#7c7c7c] transition-colors"
             aria-label="Toggle theme"
           >
             {currentTheme === 'dark' ? (
-              <Sun size={20} className="text-yellow-500" />
+              <Sun size={20} className="text-[#a5a5a5]" />
             ) : (
-              <Moon size={20} className="text-gray-700" />
+              <Moon size={20} className="text-[#535353]" />
             )}
           </button>
           
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            className="p-2 rounded-lg hover:bg-[#a5a5a5]/20 dark:hover:bg-[#535353] transition-colors"
             aria-label="Toggle menu"
           >
             {isMenuOpen ? (
-              <X size={24} className="text-gray-700 dark:text-gray-300" />
+              <X size={24} className="text-[#535353] dark:text-[#a5a5a5]" />
             ) : (
-              <Menu size={24} className="text-gray-700 dark:text-gray-300" />
+              <Menu size={24} className="text-[#535353] dark:text-[#a5a5a5]" />
             )}
           </button>
         </div>
@@ -102,13 +102,13 @@ const Header = ({ currentTheme, onThemeToggle }: HeaderProps) => {
 
       {/* Mobile Nav */}
       {isMenuOpen && (
-        <nav className="md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 shadow-lg">
+        <nav className="md:hidden bg-white dark:bg-[#292929] border-t border-[#a5a5a5] dark:border-[#535353] shadow-lg">
           <ul className="px-4 py-2 space-y-1">
             {navItems.map((item) => (
               <li key={item.id}>
                 <button
                   onClick={() => scrollToSection(item.id)}
-                  className="block w-full text-left py-3 px-4 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                  className="block w-full text-left py-3 px-4 rounded-lg text-[#535353] dark:text-[#a5a5a5] hover:bg-[#a5a5a5]/20 dark:hover:bg-[#535353] transition-colors"
                 >
                   {item.label}
                 </button>

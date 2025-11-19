@@ -43,7 +43,7 @@ const projects: Project[] = [
 
 const Projects = () => {
   return (
-    <section id="projects" className="py-20 bg-gray-50 dark:bg-gray-900 transition-colors">
+    <section id="projects" className="py-20 bg-[#a5a5a5]/10 dark:bg-[#000000] transition-colors">
       <div className="max-w-6xl mx-auto px-4">
         {/* Título da Seção */}
         <motion.div
@@ -52,11 +52,11 @@ const Projects = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-[#000000] dark:text-white mb-4">
             Meus Projetos
           </h2>
-          <div className="w-20 h-1 bg-blue-600 dark:bg-blue-400 mx-auto rounded-full"></div>
-          <p className="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <div className="w-20 h-1 bg-[#535353] dark:bg-[#7c7c7c] mx-auto rounded-full"></div>
+          <p className="mt-4 text-[#535353] dark:text-[#a5a5a5] max-w-2xl mx-auto">
             Confira alguns dos projetos que desenvolvi usando tecnologias modernas
           </p>
         </motion.div>
@@ -70,7 +70,7 @@ const Projects = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
               viewport={{ once: true }}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 group border border-gray-200 dark:border-gray-700"
+              className="bg-white dark:bg-[#292929] rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 group border border-[#a5a5a5]/30 dark:border-[#535353]"
             >
               {/* Imagem do Projeto */}
               <div className="relative overflow-hidden h-48">
@@ -80,15 +80,15 @@ const Projects = () => {
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
 
               {/* Conteúdo */}
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                <h3 className="text-xl font-semibold text-[#000000] dark:text-white mb-2">
                   {project.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">
+                <p className="text-[#535353] dark:text-[#a5a5a5] text-sm mb-4 line-clamp-2">
                   {project.description}
                 </p>
 
@@ -97,7 +97,7 @@ const Projects = () => {
                   {project.technologies.map((tech) => (
                     <span 
                       key={tech} 
-                      className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs font-medium"
+                      className="px-3 py-1 bg-[#535353]/20 dark:bg-[#535353]/40 text-[#000000] dark:text-[#a5a5a5] rounded-full text-xs font-medium border border-[#535353]/30 dark:border-[#535353]"
                     >
                       {tech}
                     </span>
@@ -110,7 +110,7 @@ const Projects = () => {
                     href={project.github} 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="flex items-center gap-1 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
+                    className="flex items-center gap-1 text-[#535353] dark:text-[#a5a5a5] hover:text-[#000000] dark:hover:text-white transition-colors font-medium"
                   >
                     <Github size={18} />
                     <span className="text-sm">Código</span>
@@ -120,7 +120,7 @@ const Projects = () => {
                       href={project.demo} 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="flex items-center gap-1 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
+                      className="flex items-center gap-1 text-[#535353] dark:text-[#a5a5a5] hover:text-[#000000] dark:hover:text-white transition-colors font-medium"
                     >
                       <ExternalLink size={18} />
                       <span className="text-sm">Demo</span>

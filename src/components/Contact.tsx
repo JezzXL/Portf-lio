@@ -49,7 +49,7 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-20 bg-white dark:bg-gray-900">
+    <section id="contact" className="py-20 bg-white dark:bg-[#000000]">
       <div className="max-w-6xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0 }}
@@ -57,10 +57,11 @@ const Contact = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">
+          <h2 className="text-4xl font-bold text-[#000000] dark:text-white mb-4">
             Entre em Contato
           </h2>
-          <p className="text-gray-600 dark:text-gray-400">
+          <div className="w-20 h-1 bg-[#535353] dark:bg-[#7c7c7c] mx-auto rounded-full mb-4"></div>
+          <p className="text-[#535353] dark:text-[#a5a5a5]">
             Gostou do meu trabalho? Vamos conversar!
           </p>
         </motion.div>
@@ -81,7 +82,7 @@ const Contact = () => {
               onChange={handleChange}
               required
               disabled={status === 'sending'}
-              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full p-3 border border-[#a5a5a5] dark:border-[#535353] rounded-lg bg-white dark:bg-[#292929] text-[#000000] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#535353] dark:focus:ring-[#7c7c7c] disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-[#7c7c7c] dark:placeholder:text-[#535353]"
             />
             <input
               type="email"
@@ -91,7 +92,7 @@ const Contact = () => {
               onChange={handleChange}
               required
               disabled={status === 'sending'}
-              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full p-3 border border-[#a5a5a5] dark:border-[#535353] rounded-lg bg-white dark:bg-[#292929] text-[#000000] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#535353] dark:focus:ring-[#7c7c7c] disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-[#7c7c7c] dark:placeholder:text-[#535353]"
             />
             <textarea
               name="message"
@@ -101,13 +102,13 @@ const Contact = () => {
               onChange={handleChange}
               required
               disabled={status === 'sending'}
-              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full p-3 border border-[#a5a5a5] dark:border-[#535353] rounded-lg bg-white dark:bg-[#292929] text-[#000000] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#535353] dark:focus:ring-[#7c7c7c] resize-none disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-[#7c7c7c] dark:placeholder:text-[#535353]"
             />
             
             <button
               type="submit"
               disabled={status === 'sending'}
-              className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-[#000000] dark:bg-[#535353] text-white py-3 rounded-lg hover:bg-[#292929] dark:hover:bg-[#7c7c7c] transition-colors font-semibold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {status === 'sending' ? (
                 <>
@@ -126,10 +127,10 @@ const Contact = () => {
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg flex items-center gap-3"
+                className="p-4 bg-[#535353]/20 dark:bg-[#535353]/30 border border-[#535353] dark:border-[#7c7c7c] rounded-lg flex items-center gap-3"
               >
-                <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0" />
-                <p className="text-green-700 dark:text-green-300 font-medium text-sm">
+                <CheckCircle className="w-5 h-5 text-[#000000] dark:text-[#a5a5a5] flex-shrink-0" />
+                <p className="text-[#000000] dark:text-[#a5a5a5] font-medium text-sm">
                   Mensagem enviada com sucesso! Responderei em breve.
                 </p>
               </motion.div>
@@ -139,10 +140,10 @@ const Contact = () => {
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-center gap-3"
+                className="p-4 bg-[#7c7c7c]/20 dark:bg-[#7c7c7c]/30 border border-[#7c7c7c] dark:border-[#a5a5a5] rounded-lg flex items-center gap-3"
               >
-                <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0" />
-                <p className="text-red-700 dark:text-red-300 font-medium text-sm">
+                <AlertCircle className="w-5 h-5 text-[#292929] dark:text-[#a5a5a5] flex-shrink-0" />
+                <p className="text-[#292929] dark:text-[#a5a5a5] font-medium text-sm">
                   Erro ao enviar. Tente novamente ou envie um email direto.
                 </p>
               </motion.div>
@@ -155,7 +156,7 @@ const Contact = () => {
             transition={{ duration: 0.5 }}
             className="space-y-6"
           >
-            <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">
+            <h3 className="text-2xl font-semibold text-[#000000] dark:text-white">
               Conecte-se Comigo
             </h3>
             <div className="space-y-4">
@@ -168,25 +169,25 @@ const Contact = () => {
                     target={link.isDownload ? undefined : "_blank"}
                     rel={link.isDownload ? undefined : "noopener noreferrer"}
                     download={link.isDownload ? "DavydWillian-WebDeveloper.pdf" : undefined}
-                    className={`flex items-center space-x-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 ${
-                      link.isDownload ? 'font-semibold border-2 border-dashed border-purple-300 dark:border-purple-700 bg-purple-50/50 dark:bg-purple-900/10' : ''
+                    className={`flex items-center space-x-3 text-[#535353] dark:text-[#a5a5a5] hover:text-[#000000] dark:hover:text-white transition-colors p-3 rounded-lg hover:bg-[#a5a5a5]/10 dark:hover:bg-[#292929] ${
+                      link.isDownload ? 'font-semibold border-2 border-dashed border-[#7c7c7c] dark:border-[#535353] bg-[#a5a5a5]/10 dark:bg-[#292929]/50' : ''
                     }`}
                   >
-                    <Icon size={20} className={link.isDownload ? "text-purple-600 dark:text-purple-400" : "text-blue-600 dark:text-blue-400"} />
+                    <Icon size={20} className={link.isDownload ? "text-[#292929] dark:text-[#7c7c7c]" : "text-[#535353] dark:text-[#7c7c7c]"} />
                     <span>{link.label}</span>
                   </a>
                 );
               })}
             </div>
 
-            <div className="mt-8 p-6 bg-blue-50 dark:bg-gray-800 rounded-lg border border-blue-200 dark:border-gray-700">
+            <div className="mt-8 p-6 bg-[#535353]/10 dark:bg-[#292929] rounded-lg border border-[#7c7c7c]/30 dark:border-[#535353]">
               <div className="flex items-start gap-3">
-                <div className="w-3 h-3 bg-green-500 rounded-full mt-1 animate-pulse" />
+                <div className="w-3 h-3 bg-[#535353] dark:bg-[#7c7c7c] rounded-full mt-1 animate-pulse" />
                 <div>
-                  <h4 className="font-semibold text-gray-800 dark:text-white mb-2">
+                  <h4 className="font-semibold text-[#000000] dark:text-white mb-2">
                     💼 Disponível para trabalho
                   </h4>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">
+                  <p className="text-[#535353] dark:text-[#a5a5a5] text-sm">
                     Atualmente aceitando novos projetos. Respondo em até 24 horas!
                   </p>
                 </div>
