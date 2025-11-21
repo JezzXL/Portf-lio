@@ -5,18 +5,26 @@ import * as THREE from 'three';
 
 const Hero = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const animationIdRef = useRef<number | null>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
 
   useEffect(() => {
-    if (!canvasRef.current) return;
+    if (!canvasRef.current || !sectionRef.current) return;
+
+    // Flag para controlar animação
+    let isAnimating = true;
 
     // Setup Scene
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    
     const renderer = new THREE.WebGLRenderer({ 
       canvas: canvasRef.current, 
       alpha: true,
       antialias: true 
     });
+    rendererRef.current = renderer;
     
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -24,7 +32,7 @@ const Hero = () => {
 
     // Criar geometria de pontos (partículas 3D)
     const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 3000;
+    const particlesCount = 2000;
     const posArray = new Float32Array(particlesCount * 3);
 
     for (let i = 0; i < particlesCount * 3; i++) {
@@ -59,19 +67,40 @@ const Hero = () => {
     waveMesh.position.y = -2;
     scene.add(waveMesh);
 
-    // Mouse movement
+    // Mouse movement - só dentro do Hero
     let mouseX = 0;
     let mouseY = 0;
+    let targetMouseX = 0;
+    let targetMouseY = 0;
+    let isMouseInside = false;
 
     const handleMouseMove = (event: MouseEvent) => {
-      mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-      mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+      if (!sectionRef.current) return;
+      
+      const rect = sectionRef.current.getBoundingClientRect();
+      targetMouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      targetMouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    const handleMouseEnter = () => {
+      isMouseInside = true;
+    };
+
+    const handleMouseLeave = () => {
+      isMouseInside = false;
+      // Não reseta - mantém a última posição
+    };
+
+    const sectionElement = sectionRef.current;
+    if (sectionElement) {
+      sectionElement.addEventListener('mousemove', handleMouseMove);
+      sectionElement.addEventListener('mouseenter', handleMouseEnter);
+      sectionElement.addEventListener('mouseleave', handleMouseLeave);
+    }
 
     // Handle resize
     const handleResize = () => {
+      if (!isAnimating) return;
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
@@ -81,6 +110,7 @@ const Hero = () => {
 
     // Observar mudanças de tema
     const observer = new MutationObserver(() => {
+      if (!isAnimating) return;
       const isDarkNow = document.documentElement.classList.contains('dark');
       particlesMaterial.color.set(isDarkNow ? 0xa5a5a5 : 0x535353);
       waveMaterial.color.set(isDarkNow ? 0x292929 : 0x7c7c7c);
@@ -95,7 +125,15 @@ const Hero = () => {
     const clock = new THREE.Clock();
     
     const animate = () => {
+      if (!isAnimating) return;
+      
       const elapsedTime = clock.getElapsedTime();
+
+      // Interpolar suavemente para a posição alvo (só quando mouse está dentro)
+      if (isMouseInside) {
+        mouseX += (targetMouseX - mouseX) * 0.05;
+        mouseY += (targetMouseY - mouseY) * 0.05;
+      }
 
       // Animar partículas
       particlesMesh.rotation.y = elapsedTime * 0.05;
@@ -114,21 +152,38 @@ const Hero = () => {
       waveMesh.rotation.z = elapsedTime * 0.02;
 
       renderer.render(scene, camera);
-      requestAnimationFrame(animate);
+      animationIdRef.current = requestAnimationFrame(animate);
     };
 
     animate();
 
     // Cleanup
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
+      isAnimating = false;
+      
+      // Cancelar animação
+      if (animationIdRef.current) {
+        cancelAnimationFrame(animationIdRef.current);
+      }
+      
+      // Remover event listeners
+      if (sectionElement) {
+        sectionElement.removeEventListener('mousemove', handleMouseMove);
+        sectionElement.removeEventListener('mouseenter', handleMouseEnter);
+        sectionElement.removeEventListener('mouseleave', handleMouseLeave);
+      }
       window.removeEventListener('resize', handleResize);
       observer.disconnect();
-      renderer.dispose();
+      
+      // Limpar Three.js
+      scene.remove(particlesMesh);
+      scene.remove(waveMesh);
       particlesGeometry.dispose();
       particlesMaterial.dispose();
       waveGeometry.dispose();
       waveMaterial.dispose();
+      renderer.dispose();
+      rendererRef.current = null;
     };
   }, []);
 
@@ -174,7 +229,8 @@ const Hero = () => {
   };
 
   return (
-    <section 
+    <div 
+      ref={sectionRef}
       id="hero" 
       className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-[#a5a5a5]/20 via-[#7c7c7c]/10 to-[#535353]/20 dark:from-[#000000] dark:via-[#292929] dark:to-[#000000] pt-20 transition-colors overflow-hidden"
     >
@@ -243,9 +299,9 @@ const Hero = () => {
             </button>
 
             <a 
-            href="/davyd_developer_curriculo.pdf"
-            download="DavydWillian-WebDeveloper.pdf"
-            className='inline-flex items-center px-8 py-4 bg-gradient-to-r from-[#292929] to-[#535353] dark:from-[#535353] dark:to-[#7c7c7c] text-white rounded-full hover:from-[#000000] hover:to-[#292929] dark:hover:from-[#7c7c7c] dark:hover:to-[#a5a5a5] transition-all hover:scale-105 shadow-lg hover:shadow-xl font-semibold'
+              href="/davyd_developer_curriculo.pdf"
+              download="DavydWillian-WebDeveloper.pdf"
+              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-[#292929] to-[#535353] dark:from-[#535353] dark:to-[#7c7c7c] text-white rounded-full hover:from-[#000000] hover:to-[#292929] dark:hover:from-[#7c7c7c] dark:hover:to-[#a5a5a5] transition-all hover:scale-105 shadow-lg hover:shadow-xl font-semibold"
             >
               <FileText className="mr-2 w-5 h-5" />
               Baixar currículo
@@ -287,7 +343,7 @@ const Hero = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1, repeat: Infinity, duration: 1.5 }}
+            transition={{ delay: 1 }}
             className="pt-12 cursor-pointer"
             onClick={scrollToContent}
           >
@@ -305,7 +361,7 @@ const Hero = () => {
           </motion.div>
         </motion.div>
       </div>
-    </section>
+    </div>
   );
 };
 
