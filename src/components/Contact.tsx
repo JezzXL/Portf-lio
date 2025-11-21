@@ -1,11 +1,217 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Linkedin, Github, Send, CheckCircle, AlertCircle, FileText } from 'lucide-react';
 import emailjs from '@emailjs/browser';
+import * as THREE from 'three';
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const animationIdRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (!canvasRef.current || !sectionRef.current) return;
+
+    let isAnimating = true;
+
+    // Setup Scene
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    
+    const renderer = new THREE.WebGLRenderer({ 
+      canvas: canvasRef.current, 
+      alpha: true,
+      antialias: true 
+    });
+    
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    camera.position.z = 5;
+
+    // Criar esferas flutuantes
+    const spheres: THREE.Mesh[] = [];
+    const sphereCount = 15;
+    const isDark = document.documentElement.classList.contains('dark');
+
+    for (let i = 0; i < sphereCount; i++) {
+      const geometry = new THREE.SphereGeometry(Math.random() * 0.3 + 0.1, 16, 16);
+      const material = new THREE.MeshBasicMaterial({
+        color: isDark ? 0x535353 : 0xa5a5a5,
+        transparent: true,
+        opacity: 0.3,
+        wireframe: true,
+      });
+      const sphere = new THREE.Mesh(geometry, material);
+      
+      sphere.position.x = (Math.random() - 0.5) * 12;
+      sphere.position.y = (Math.random() - 0.5) * 8;
+      sphere.position.z = (Math.random() - 0.5) * 5;
+      
+      sphere.userData = {
+        speedX: (Math.random() - 0.5) * 0.01,
+        speedY: (Math.random() - 0.5) * 0.01,
+        rotationSpeed: Math.random() * 0.02,
+      };
+      
+      spheres.push(sphere);
+      scene.add(sphere);
+    }
+
+    // Criar linhas conectoras
+    const lineMaterial = new THREE.LineBasicMaterial({ 
+      color: isDark ? 0x7c7c7c : 0x535353, 
+      transparent: true, 
+      opacity: 0.1 
+    });
+
+    // Criar grid de fundo
+    const gridGeometry = new THREE.PlaneGeometry(30, 30, 30, 30);
+    const gridMaterial = new THREE.MeshBasicMaterial({
+      color: isDark ? 0x292929 : 0x7c7c7c,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.08,
+    });
+    const grid = new THREE.Mesh(gridGeometry, gridMaterial);
+    grid.rotation.x = -Math.PI * 0.4;
+    grid.position.y = -3;
+    grid.position.z = -2;
+    scene.add(grid);
+
+    // Mouse movement
+    let mouseX = 0;
+    let mouseY = 0;
+    let targetMouseX = 0;
+    let targetMouseY = 0;
+    let isMouseInside = false;
+
+    const handleMouseMove = (event: MouseEvent) => {
+      if (!sectionRef.current) return;
+      
+      const rect = sectionRef.current.getBoundingClientRect();
+      targetMouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      targetMouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    };
+
+    const handleMouseEnter = () => {
+      isMouseInside = true;
+    };
+
+    const handleMouseLeave = () => {
+      isMouseInside = false;
+    };
+
+    const sectionElement = sectionRef.current;
+    if (sectionElement) {
+      sectionElement.addEventListener('mousemove', handleMouseMove);
+      sectionElement.addEventListener('mouseenter', handleMouseEnter);
+      sectionElement.addEventListener('mouseleave', handleMouseLeave);
+    }
+
+    // Handle resize
+    const handleResize = () => {
+      if (!isAnimating) return;
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Observar mudanças de tema
+    const observer = new MutationObserver(() => {
+      if (!isAnimating) return;
+      const isDarkNow = document.documentElement.classList.contains('dark');
+      spheres.forEach(sphere => {
+        (sphere.material as THREE.MeshBasicMaterial).color.set(isDarkNow ? 0x535353 : 0xa5a5a5);
+      });
+      gridMaterial.color.set(isDarkNow ? 0x292929 : 0x7c7c7c);
+      lineMaterial.color.set(isDarkNow ? 0x7c7c7c : 0x535353);
+    });
+
+    observer.observe(document.documentElement, { 
+      attributes: true, 
+      attributeFilter: ['class'] 
+    });
+
+    // Animation loop
+    const clock = new THREE.Clock();
+    
+    const animate = () => {
+      if (!isAnimating) return;
+      
+      const elapsedTime = clock.getElapsedTime();
+
+      // Interpolar suavemente
+      if (isMouseInside) {
+        mouseX += (targetMouseX - mouseX) * 0.05;
+        mouseY += (targetMouseY - mouseY) * 0.05;
+      }
+
+      // Animar esferas
+      spheres.forEach((sphere) => {
+        sphere.position.x += sphere.userData.speedX;
+        sphere.position.y += sphere.userData.speedY;
+        sphere.rotation.x += sphere.userData.rotationSpeed;
+        sphere.rotation.y += sphere.userData.rotationSpeed * 0.5;
+
+        // Bounce nas bordas
+        if (Math.abs(sphere.position.x) > 6) sphere.userData.speedX *= -1;
+        if (Math.abs(sphere.position.y) > 4) sphere.userData.speedY *= -1;
+
+        // Efeito do mouse
+        sphere.position.x += mouseX * 0.02;
+        sphere.position.y += mouseY * 0.02;
+      });
+
+      // Animar grid
+      grid.rotation.z = elapsedTime * 0.02;
+      const positions = gridGeometry.attributes.position.array as Float32Array;
+      for (let i = 0; i < positions.length; i += 3) {
+        const x = positions[i];
+        const y = positions[i + 1];
+        positions[i + 2] = Math.sin(x * 0.3 + elapsedTime * 0.5) * 0.2 + 
+                           Math.cos(y * 0.3 + elapsedTime * 0.3) * 0.2;
+      }
+      gridGeometry.attributes.position.needsUpdate = true;
+
+      renderer.render(scene, camera);
+      animationIdRef.current = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    // Cleanup
+    return () => {
+      isAnimating = false;
+      
+      if (animationIdRef.current) {
+        cancelAnimationFrame(animationIdRef.current);
+      }
+      
+      if (sectionElement) {
+        sectionElement.removeEventListener('mousemove', handleMouseMove);
+        sectionElement.removeEventListener('mouseenter', handleMouseEnter);
+        sectionElement.removeEventListener('mouseleave', handleMouseLeave);
+      }
+      window.removeEventListener('resize', handleResize);
+      observer.disconnect();
+      
+      spheres.forEach(sphere => {
+        sphere.geometry.dispose();
+        (sphere.material as THREE.MeshBasicMaterial).dispose();
+        scene.remove(sphere);
+      });
+      gridGeometry.dispose();
+      gridMaterial.dispose();
+      lineMaterial.dispose();
+      scene.remove(grid);
+      renderer.dispose();
+    };
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -16,27 +222,24 @@ const Contact = () => {
     setStatus('sending');
 
     try {
-      // EMAILJS
       await emailjs.send(
-        'service_mq5f41t',      // Service ID
-        'template_g614yim',     // Template ID
+        'service_mq5f41t',
+        'template_g614yim',
         {
           from_name: formData.name,
           reply_to: formData.email,
           message: formData.message,
-          to_email: 'davydsantos.gt@gmail.com', // email
+          to_email: 'davydsantos.gt@gmail.com',
         },
-        'LY3V6hJicNfrgxqFq'       // Public Key
+        'LY3V6hJicNfrgxqFq'
       );
 
       setStatus('success');
       setFormData({ name: '', email: '', message: '' });
-      
       setTimeout(() => setStatus('idle'), 5000);
     } catch (error) {
       console.error('Erro ao enviar email:', error);
       setStatus('error');
-      
       setTimeout(() => setStatus('idle'), 5000);
     }
   };
@@ -49,8 +252,15 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-20 bg-white dark:bg-[#000000]">
-      <div className="max-w-6xl mx-auto px-4">
+    <div ref={sectionRef} id="contact" className="relative py-20 bg-white dark:bg-[#000000] overflow-hidden">
+      {/* Canvas 3D */}
+      <canvas 
+        ref={canvasRef} 
+        className="absolute inset-0 w-full h-full"
+        style={{ pointerEvents: 'none' }}
+      />
+
+      <div className="relative z-10 max-w-6xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -82,7 +292,7 @@ const Contact = () => {
               onChange={handleChange}
               required
               disabled={status === 'sending'}
-              className="w-full p-3 border border-[#a5a5a5] dark:border-[#535353] rounded-lg bg-white dark:bg-[#292929] text-[#000000] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#535353] dark:focus:ring-[#7c7c7c] disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-[#7c7c7c] dark:placeholder:text-[#535353]"
+              className="w-full p-3 border border-[#a5a5a5] dark:border-[#535353] rounded-lg bg-white/80 dark:bg-[#292929]/80 backdrop-blur-sm text-[#000000] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#535353] dark:focus:ring-[#7c7c7c] disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-[#7c7c7c] dark:placeholder:text-[#535353]"
             />
             <input
               type="email"
@@ -92,7 +302,7 @@ const Contact = () => {
               onChange={handleChange}
               required
               disabled={status === 'sending'}
-              className="w-full p-3 border border-[#a5a5a5] dark:border-[#535353] rounded-lg bg-white dark:bg-[#292929] text-[#000000] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#535353] dark:focus:ring-[#7c7c7c] disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-[#7c7c7c] dark:placeholder:text-[#535353]"
+              className="w-full p-3 border border-[#a5a5a5] dark:border-[#535353] rounded-lg bg-white/80 dark:bg-[#292929]/80 backdrop-blur-sm text-[#000000] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#535353] dark:focus:ring-[#7c7c7c] disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-[#7c7c7c] dark:placeholder:text-[#535353]"
             />
             <textarea
               name="message"
@@ -102,7 +312,7 @@ const Contact = () => {
               onChange={handleChange}
               required
               disabled={status === 'sending'}
-              className="w-full p-3 border border-[#a5a5a5] dark:border-[#535353] rounded-lg bg-white dark:bg-[#292929] text-[#000000] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#535353] dark:focus:ring-[#7c7c7c] resize-none disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-[#7c7c7c] dark:placeholder:text-[#535353]"
+              className="w-full p-3 border border-[#a5a5a5] dark:border-[#535353] rounded-lg bg-white/80 dark:bg-[#292929]/80 backdrop-blur-sm text-[#000000] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#535353] dark:focus:ring-[#7c7c7c] resize-none disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-[#7c7c7c] dark:placeholder:text-[#535353]"
             />
             
             <button
@@ -127,7 +337,7 @@ const Contact = () => {
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-4 bg-[#535353]/20 dark:bg-[#535353]/30 border border-[#535353] dark:border-[#7c7c7c] rounded-lg flex items-center gap-3"
+                className="p-4 bg-[#535353]/20 dark:bg-[#535353]/30 border border-[#535353] dark:border-[#7c7c7c] rounded-lg flex items-center gap-3 backdrop-blur-sm"
               >
                 <CheckCircle className="w-5 h-5 text-[#000000] dark:text-[#a5a5a5] flex-shrink-0" />
                 <p className="text-[#000000] dark:text-[#a5a5a5] font-medium text-sm">
@@ -140,7 +350,7 @@ const Contact = () => {
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-4 bg-[#7c7c7c]/20 dark:bg-[#7c7c7c]/30 border border-[#7c7c7c] dark:border-[#a5a5a5] rounded-lg flex items-center gap-3"
+                className="p-4 bg-[#7c7c7c]/20 dark:bg-[#7c7c7c]/30 border border-[#7c7c7c] dark:border-[#a5a5a5] rounded-lg flex items-center gap-3 backdrop-blur-sm"
               >
                 <AlertCircle className="w-5 h-5 text-[#292929] dark:text-[#a5a5a5] flex-shrink-0" />
                 <p className="text-[#292929] dark:text-[#a5a5a5] font-medium text-sm">
@@ -169,7 +379,7 @@ const Contact = () => {
                     target={link.isDownload ? undefined : "_blank"}
                     rel={link.isDownload ? undefined : "noopener noreferrer"}
                     download={link.isDownload ? "DavydWillian-WebDeveloper.pdf" : undefined}
-                    className={`flex items-center space-x-3 text-[#535353] dark:text-[#a5a5a5] hover:text-[#000000] dark:hover:text-white transition-colors p-3 rounded-lg hover:bg-[#a5a5a5]/10 dark:hover:bg-[#292929] ${
+                    className={`flex items-center space-x-3 text-[#535353] dark:text-[#a5a5a5] hover:text-[#000000] dark:hover:text-white transition-colors p-3 rounded-lg hover:bg-[#a5a5a5]/10 dark:hover:bg-[#292929] backdrop-blur-sm ${
                       link.isDownload ? 'font-semibold border-2 border-dashed border-[#7c7c7c] dark:border-[#535353] bg-[#a5a5a5]/10 dark:bg-[#292929]/50' : ''
                     }`}
                   >
@@ -180,7 +390,7 @@ const Contact = () => {
               })}
             </div>
 
-            <div className="mt-8 p-6 bg-[#535353]/10 dark:bg-[#292929] rounded-lg border border-[#7c7c7c]/30 dark:border-[#535353]">
+            <div className="mt-8 p-6 bg-[#535353]/10 dark:bg-[#292929]/80 backdrop-blur-sm rounded-lg border border-[#7c7c7c]/30 dark:border-[#535353]">
               <div className="flex items-start gap-3">
                 <div className="w-3 h-3 bg-[#535353] dark:bg-[#7c7c7c] rounded-full mt-1 animate-pulse" />
                 <div>
@@ -196,7 +406,7 @@ const Contact = () => {
           </motion.div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
