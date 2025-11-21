@@ -64,7 +64,7 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-20 bg-white dark:bg-[#000000] transition-colors">
+    <section id="about" className="py-20 bg-white dark:bg-[#0a0a0a] transition-colors">
       <div className="max-w-6xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
