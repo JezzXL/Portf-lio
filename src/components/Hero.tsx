@@ -12,10 +12,8 @@ const Hero = () => {
   useEffect(() => {
     if (!canvasRef.current || !sectionRef.current) return;
 
-    // Flag para controlar animação
     let isAnimating = true;
 
-    // Setup Scene
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     
@@ -30,7 +28,6 @@ const Hero = () => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     camera.position.z = 5;
 
-    // Criar geometria de pontos (partículas 3D)
     const particlesGeometry = new THREE.BufferGeometry();
     const particlesCount = 2000;
     const posArray = new Float32Array(particlesCount * 3);
@@ -41,7 +38,6 @@ const Hero = () => {
 
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 
-    // Material das partículas
     const isDark = document.documentElement.classList.contains('dark');
     const particlesMaterial = new THREE.PointsMaterial({
       size: 0.015,
@@ -54,7 +50,6 @@ const Hero = () => {
     const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
     scene.add(particlesMesh);
 
-    // Criar geometria de ondas/waves
     const waveGeometry = new THREE.PlaneGeometry(20, 20, 50, 50);
     const waveMaterial = new THREE.MeshBasicMaterial({
       color: isDark ? 0x292929 : 0x7c7c7c,
@@ -67,7 +62,6 @@ const Hero = () => {
     waveMesh.position.y = -2;
     scene.add(waveMesh);
 
-    // Mouse movement - só dentro do Hero
     let mouseX = 0;
     let mouseY = 0;
     let targetMouseX = 0;
@@ -88,7 +82,6 @@ const Hero = () => {
 
     const handleMouseLeave = () => {
       isMouseInside = false;
-      // Não reseta - mantém a última posição
     };
 
     const sectionElement = sectionRef.current;
@@ -98,7 +91,6 @@ const Hero = () => {
       sectionElement.addEventListener('mouseleave', handleMouseLeave);
     }
 
-    // Handle resize
     const handleResize = () => {
       if (!isAnimating) return;
       camera.aspect = window.innerWidth / window.innerHeight;
@@ -108,7 +100,6 @@ const Hero = () => {
 
     window.addEventListener('resize', handleResize);
 
-    // Observar mudanças de tema
     const observer = new MutationObserver(() => {
       if (!isAnimating) return;
       const isDarkNow = document.documentElement.classList.contains('dark');
@@ -121,7 +112,6 @@ const Hero = () => {
       attributeFilter: ['class'] 
     });
 
-    // Animation loop
     const clock = new THREE.Clock();
     
     const animate = () => {
@@ -129,18 +119,15 @@ const Hero = () => {
       
       const elapsedTime = clock.getElapsedTime();
 
-      // Interpolar suavemente para a posição alvo (só quando mouse está dentro)
       if (isMouseInside) {
         mouseX += (targetMouseX - mouseX) * 0.05;
         mouseY += (targetMouseY - mouseY) * 0.05;
       }
 
-      // Animar partículas
       particlesMesh.rotation.y = elapsedTime * 0.05;
       particlesMesh.rotation.x = mouseY * 0.3;
       particlesMesh.position.x = mouseX * 0.5;
 
-      // Animar ondas
       const positions = waveGeometry.attributes.position.array as Float32Array;
       for (let i = 0; i < positions.length; i += 3) {
         const x = positions[i];
@@ -157,16 +144,13 @@ const Hero = () => {
 
     animate();
 
-    // Cleanup
     return () => {
       isAnimating = false;
       
-      // Cancelar animação
       if (animationIdRef.current) {
         cancelAnimationFrame(animationIdRef.current);
       }
       
-      // Remover event listeners
       if (sectionElement) {
         sectionElement.removeEventListener('mousemove', handleMouseMove);
         sectionElement.removeEventListener('mouseenter', handleMouseEnter);
@@ -175,7 +159,6 @@ const Hero = () => {
       window.removeEventListener('resize', handleResize);
       observer.disconnect();
       
-      // Limpar Three.js
       scene.remove(particlesMesh);
       scene.remove(waveMesh);
       particlesGeometry.dispose();
@@ -189,8 +172,8 @@ const Hero = () => {
 
   const socialLinks = [
     { icon: Github, href: 'https://github.com/JezzXL', label: 'GitHub' },
-    { icon: Linkedin, href: 'https://www.linkedin.com/in/davydwillianp/', label: 'LinkedIn' },
-    { icon: Mail, href: 'mailto:davydsantos.gt@gmail.com', label: 'Email' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/davydwillianp/', label: 'LinkedIn', color: 'hover:text-blue-500' },
+    { icon: Mail, href: 'mailto:davydsantos.gt@gmail.com', label: 'Email', color: 'hover:text-red-500' },
   ];
 
   const scrollToProjects = () => {
@@ -234,7 +217,6 @@ const Hero = () => {
       id="hero" 
       className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-[#a5a5a5]/20 via-[#7c7c7c]/10 to-[#535353]/20 dark:from-[#000000] dark:via-[#292929] dark:to-[#000000] pt-20 transition-colors overflow-hidden"
     >
-      {/* Canvas 3D */}
       <canvas 
         ref={canvasRef} 
         className="absolute inset-0 w-full h-full"
@@ -248,27 +230,26 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
           className="space-y-8"
         >
-          {/* Badge */}
+          {/* Badge com verde para disponibilidade */}
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
             className="inline-block"
           >
-            <span className="px-4 py-2 bg-[#535353]/20 dark:bg-[#535353]/30 text-[#000000] dark:text-[#a5a5a5] rounded-full text-sm font-medium border border-[#7c7c7c]/30 dark:border-[#535353] backdrop-blur-sm">
-              👋 Disponível para novos projetos
+            <span className="px-4 py-2 bg-emerald-500/20 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 rounded-full text-sm font-medium border border-emerald-500/40 backdrop-blur-sm flex items-center gap-2 mx-auto w-fit">
+              <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+              Disponível para novos projetos
             </span>
           </motion.div>
 
-          {/* Título Principal */}
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-[#000000] dark:text-white leading-tight">
             Olá, eu sou{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#535353] to-[#000000] dark:from-[#7c7c7c] dark:to-[#a5a5a5]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-400 dark:to-violet-400">
               Davyd Developer
             </span>
           </h1>
 
-          {/* Subtítulo */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -276,46 +257,46 @@ const Hero = () => {
             className="text-xl md:text-2xl text-[#535353] dark:text-[#a5a5a5] max-w-3xl mx-auto"
           >
             Desenvolvedor{' '}
-            <span className="font-semibold text-[#000000] dark:text-[#7c7c7c]">
+            <span className="font-semibold text-blue-600 dark:text-blue-400">
               Front end
             </span>{' '}
             apaixonado por criar experiências digitais incríveis com React,
             TypeScript e tecnologias modernas.
           </motion.p>
 
-          {/* Botões de Ação */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
+            {/* Botão principal com azul */}
             <button
               onClick={scrollToProjects}
-              className="group inline-flex items-center px-8 py-4 bg-[#000000] dark:bg-[#535353] text-white rounded-full hover:bg-[#292929] dark:hover:bg-[#7c7c7c] transition-all hover:scale-105 shadow-lg hover:shadow-xl font-semibold"
+              className="group inline-flex items-center px-8 py-4 bg-blue-600 dark:bg-blue-500 text-white rounded-full hover:bg-blue-700 dark:hover:bg-blue-600 transition-all hover:scale-105 shadow-lg hover:shadow-blue-500/25 font-semibold"
             >
               Ver Meus Projetos
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
 
+            {/* Botão currículo com roxo/violeta */}
             <a 
               href="/davyd_developer_curriculo.pdf"
               download="DavydWillian-WebDeveloper.pdf"
-              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-[#292929] to-[#535353] dark:from-[#535353] dark:to-[#7c7c7c] text-white rounded-full hover:from-[#000000] hover:to-[#292929] dark:hover:from-[#7c7c7c] dark:hover:to-[#a5a5a5] transition-all hover:scale-105 shadow-lg hover:shadow-xl font-semibold"
+              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-violet-600 to-purple-600 dark:from-violet-500 dark:to-purple-500 text-white rounded-full hover:from-violet-700 hover:to-purple-700 dark:hover:from-violet-600 dark:hover:to-purple-600 transition-all hover:scale-105 shadow-lg hover:shadow-violet-500/25 font-semibold"
             >
               <FileText className="mr-2 w-5 h-5" />
-              Baixar currículo
+              Baixar Currículo
             </a>
 
             <button
               onClick={scrollToContact}
-              className="inline-flex items-center px-8 py-4 bg-white/80 dark:bg-[#292929]/80 backdrop-blur-sm text-[#000000] dark:text-white border-2 border-[#535353] dark:border-[#535353] rounded-full hover:border-[#000000] dark:hover:border-[#7c7c7c] hover:bg-[#a5a5a5]/10 dark:hover:bg-[#535353] transition-all hover:scale-105 shadow-lg hover:shadow-xl font-semibold"
+              className="inline-flex items-center px-8 py-4 bg-white/80 dark:bg-[#292929]/80 backdrop-blur-sm text-[#000000] dark:text-white border-2 border-[#535353] dark:border-[#535353] rounded-full hover:border-blue-500 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all hover:scale-105 shadow-lg font-semibold"
             >
               Entre em Contato
             </button>
           </motion.div>
 
-          {/* Social Links */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -330,7 +311,7 @@ const Hero = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 bg-white/80 dark:bg-[#292929]/80 backdrop-blur-sm rounded-full shadow-md hover:shadow-lg hover:scale-110 transition-all text-[#535353] dark:text-[#a5a5a5] hover:text-[#000000] dark:hover:text-white border border-[#a5a5a5]/30 dark:border-[#535353]"
+                  className={`p-3 bg-white/80 dark:bg-[#292929]/80 backdrop-blur-sm rounded-full shadow-md hover:shadow-lg hover:scale-110 transition-all text-[#535353] dark:text-[#a5a5a5] hover:text-[#000000] dark:hover:text-white border border-[#a5a5a5]/30 dark:border-[#535353] ${social.color || ''}`}
                   aria-label={social.label}
                 >
                   <Icon size={24} />
@@ -339,7 +320,6 @@ const Hero = () => {
             })}
           </motion.div>
 
-          {/* Scroll Indicator */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -365,4 +345,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default Hero;  
