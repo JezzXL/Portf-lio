@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Linkedin, Github, Send, CheckCircle, AlertCircle, FileText } from 'lucide-react';
+import { Mail, Linkedin, Github, Send, CheckCircle, AlertCircle, Download } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import * as THREE from 'three';
 
@@ -17,7 +17,6 @@ const Contact = () => {
 
     let isAnimating = true;
 
-    // Setup Scene
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     
@@ -31,7 +30,6 @@ const Contact = () => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     camera.position.z = 5;
 
-    // Criar esferas flutuantes
     const spheres: THREE.Mesh[] = [];
     const sphereCount = 15;
     const isDark = document.documentElement.classList.contains('dark');
@@ -60,14 +58,12 @@ const Contact = () => {
       scene.add(sphere);
     }
 
-    // Criar linhas conectoras
     const lineMaterial = new THREE.LineBasicMaterial({ 
       color: isDark ? 0x7c7c7c : 0x535353, 
       transparent: true, 
       opacity: 0.1 
     });
 
-    // Criar grid de fundo
     const gridGeometry = new THREE.PlaneGeometry(30, 30, 30, 30);
     const gridMaterial = new THREE.MeshBasicMaterial({
       color: isDark ? 0x292929 : 0x7c7c7c,
@@ -81,7 +77,6 @@ const Contact = () => {
     grid.position.z = -2;
     scene.add(grid);
 
-    // Mouse movement
     let mouseX = 0;
     let mouseY = 0;
     let targetMouseX = 0;
@@ -111,7 +106,6 @@ const Contact = () => {
       sectionElement.addEventListener('mouseleave', handleMouseLeave);
     }
 
-    // Handle resize
     const handleResize = () => {
       if (!isAnimating) return;
       camera.aspect = window.innerWidth / window.innerHeight;
@@ -121,7 +115,6 @@ const Contact = () => {
 
     window.addEventListener('resize', handleResize);
 
-    // Observar mudanças de tema
     const observer = new MutationObserver(() => {
       if (!isAnimating) return;
       const isDarkNow = document.documentElement.classList.contains('dark');
@@ -137,7 +130,6 @@ const Contact = () => {
       attributeFilter: ['class'] 
     });
 
-    // Animation loop
     const clock = new THREE.Clock();
     
     const animate = () => {
@@ -145,29 +137,24 @@ const Contact = () => {
       
       const elapsedTime = clock.getElapsedTime();
 
-      // Interpolar suavemente
       if (isMouseInside) {
         mouseX += (targetMouseX - mouseX) * 0.05;
         mouseY += (targetMouseY - mouseY) * 0.05;
       }
 
-      // Animar esferas
       spheres.forEach((sphere) => {
         sphere.position.x += sphere.userData.speedX;
         sphere.position.y += sphere.userData.speedY;
         sphere.rotation.x += sphere.userData.rotationSpeed;
         sphere.rotation.y += sphere.userData.rotationSpeed * 0.5;
 
-        // Bounce nas bordas
         if (Math.abs(sphere.position.x) > 6) sphere.userData.speedX *= -1;
         if (Math.abs(sphere.position.y) > 4) sphere.userData.speedY *= -1;
 
-        // Efeito do mouse
         sphere.position.x += mouseX * 0.02;
         sphere.position.y += mouseY * 0.02;
       });
 
-      // Animar grid
       grid.rotation.z = elapsedTime * 0.02;
       const positions = gridGeometry.attributes.position.array as Float32Array;
       for (let i = 0; i < positions.length; i += 3) {
@@ -184,7 +171,6 @@ const Contact = () => {
 
     animate();
 
-    // Cleanup
     return () => {
       isAnimating = false;
       
@@ -245,15 +231,13 @@ const Contact = () => {
   };
 
   const socialLinks = [
-    { icon: Mail, label: 'davydsantos.gt@gmail.com', href: 'mailto:davydsantos.gt@gmail.com', isDownload: false },
-    { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/davydwillianp/', isDownload: false },
-    { icon: Github, label: 'GitHub', href: 'https://github.com/JezzXL', isDownload: false },
-    { icon: FileText, label: 'Baixar Currículo (PDF)', href: '/Davyd-WebDeveloper.pdf', isDownload: true },
+    { icon: Mail, label: 'davydsantos.gt@gmail.com', href: 'mailto:davydsantos.gt@gmail.com', color: 'hover:text-red-500', iconColor: 'text-red-500' },
+    { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/davydwillianp/', color: 'hover:text-blue-500', iconColor: 'text-blue-500' },
+    { icon: Github, label: 'GitHub', href: 'https://github.com/JezzXL', color: 'hover:text-[#000] dark:hover:text-white', iconColor: 'text-[#535353] dark:text-[#a5a5a5]' },
   ];
 
   return (
     <div ref={sectionRef} id="contact" className="relative py-20 bg-white dark:bg-[#000000] overflow-hidden">
-      {/* Canvas 3D */}
       <canvas 
         ref={canvasRef} 
         className="absolute inset-0 w-full h-full"
@@ -270,7 +254,7 @@ const Contact = () => {
           <h2 className="text-4xl font-bold text-[#000000] dark:text-white mb-4">
             Entre em Contato
           </h2>
-          <div className="w-20 h-1 bg-[#535353] dark:bg-[#7c7c7c] mx-auto rounded-full mb-4"></div>
+          <div className="w-20 h-1 bg-blue-500 mx-auto rounded-full mb-4"></div>
           <p className="text-[#535353] dark:text-[#a5a5a5]">
             Gostou do meu trabalho? Vamos conversar!
           </p>
@@ -292,7 +276,7 @@ const Contact = () => {
               onChange={handleChange}
               required
               disabled={status === 'sending'}
-              className="w-full p-3 border border-[#a5a5a5] dark:border-[#535353] rounded-lg bg-white/80 dark:bg-[#292929]/80 backdrop-blur-sm text-[#000000] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#535353] dark:focus:ring-[#7c7c7c] disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-[#7c7c7c] dark:placeholder:text-[#535353]"
+              className="w-full p-3 border border-[#a5a5a5] dark:border-[#535353] rounded-lg bg-white/80 dark:bg-[#292929]/80 backdrop-blur-sm text-[#000000] dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-[#7c7c7c] dark:placeholder:text-[#535353] transition-all"
             />
             <input
               type="email"
@@ -302,7 +286,7 @@ const Contact = () => {
               onChange={handleChange}
               required
               disabled={status === 'sending'}
-              className="w-full p-3 border border-[#a5a5a5] dark:border-[#535353] rounded-lg bg-white/80 dark:bg-[#292929]/80 backdrop-blur-sm text-[#000000] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#535353] dark:focus:ring-[#7c7c7c] disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-[#7c7c7c] dark:placeholder:text-[#535353]"
+              className="w-full p-3 border border-[#a5a5a5] dark:border-[#535353] rounded-lg bg-white/80 dark:bg-[#292929]/80 backdrop-blur-sm text-[#000000] dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-[#7c7c7c] dark:placeholder:text-[#535353] transition-all"
             />
             <textarea
               name="message"
@@ -312,13 +296,14 @@ const Contact = () => {
               onChange={handleChange}
               required
               disabled={status === 'sending'}
-              className="w-full p-3 border border-[#a5a5a5] dark:border-[#535353] rounded-lg bg-white/80 dark:bg-[#292929]/80 backdrop-blur-sm text-[#000000] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#535353] dark:focus:ring-[#7c7c7c] resize-none disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-[#7c7c7c] dark:placeholder:text-[#535353]"
+              className="w-full p-3 border border-[#a5a5a5] dark:border-[#535353] rounded-lg bg-white/80 dark:bg-[#292929]/80 backdrop-blur-sm text-[#000000] dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-[#7c7c7c] dark:placeholder:text-[#535353] transition-all"
             />
             
+            {/* Botão enviar com azul */}
             <button
               type="submit"
               disabled={status === 'sending'}
-              className="w-full bg-[#000000] dark:bg-[#535353] text-white py-3 rounded-lg hover:bg-[#292929] dark:hover:bg-[#7c7c7c] transition-colors font-semibold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-blue-600 dark:bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-all font-semibold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-blue-500/25"
             >
               {status === 'sending' ? (
                 <>
@@ -333,27 +318,29 @@ const Contact = () => {
               )}
             </button>
 
+            {/* Sucesso com verde */}
             {status === 'success' && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-4 bg-[#535353]/20 dark:bg-[#535353]/30 border border-[#535353] dark:border-[#7c7c7c] rounded-lg flex items-center gap-3 backdrop-blur-sm"
+                className="p-4 bg-emerald-500/20 border border-emerald-500/40 rounded-lg flex items-center gap-3 backdrop-blur-sm"
               >
-                <CheckCircle className="w-5 h-5 text-[#000000] dark:text-[#a5a5a5] flex-shrink-0" />
-                <p className="text-[#000000] dark:text-[#a5a5a5] font-medium text-sm">
+                <CheckCircle className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
+                <p className="text-emerald-700 dark:text-emerald-400 font-medium text-sm">
                   Mensagem enviada com sucesso! Responderei em breve.
                 </p>
               </motion.div>
             )}
 
+            {/* Erro com vermelho */}
             {status === 'error' && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-4 bg-[#7c7c7c]/20 dark:bg-[#7c7c7c]/30 border border-[#7c7c7c] dark:border-[#a5a5a5] rounded-lg flex items-center gap-3 backdrop-blur-sm"
+                className="p-4 bg-red-500/20 border border-red-500/40 rounded-lg flex items-center gap-3 backdrop-blur-sm"
               >
-                <AlertCircle className="w-5 h-5 text-[#292929] dark:text-[#a5a5a5] flex-shrink-0" />
-                <p className="text-[#292929] dark:text-[#a5a5a5] font-medium text-sm">
+                <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0" />
+                <p className="text-red-700 dark:text-red-400 font-medium text-sm">
                   Erro ao enviar. Tente novamente ou envie um email direto.
                 </p>
               </motion.div>
@@ -376,25 +363,33 @@ const Contact = () => {
                   <a
                     key={link.label}
                     href={link.href}
-                    target={link.isDownload ? undefined : "_blank"}
-                    rel={link.isDownload ? undefined : "noopener noreferrer"}
-                    download={link.isDownload ? "DavydWillian-WebDeveloper.pdf" : undefined}
-                    className={`flex items-center space-x-3 text-[#535353] dark:text-[#a5a5a5] hover:text-[#000000] dark:hover:text-white transition-colors p-3 rounded-lg hover:bg-[#a5a5a5]/10 dark:hover:bg-[#292929] backdrop-blur-sm ${
-                      link.isDownload ? 'font-semibold border-2 border-dashed border-[#7c7c7c] dark:border-[#535353] bg-[#a5a5a5]/10 dark:bg-[#292929]/50' : ''
-                    }`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`flex items-center space-x-3 text-[#535353] dark:text-[#a5a5a5] ${link.color} transition-colors p-3 rounded-lg hover:bg-[#a5a5a5]/10 dark:hover:bg-[#292929] backdrop-blur-sm`}
                   >
-                    <Icon size={20} className={link.isDownload ? "text-[#292929] dark:text-[#7c7c7c]" : "text-[#535353] dark:text-[#7c7c7c]"} />
+                    <Icon size={20} className={link.iconColor} />
                     <span>{link.label}</span>
                   </a>
                 );
               })}
+              
+              {/* Botão currículo destacado com roxo */}
+              <a
+                href="/Davyd-WebDeveloper.pdf"
+                download="DavydWillian-WebDeveloper.pdf"
+                className="flex items-center space-x-3 p-4 rounded-lg bg-gradient-to-r from-violet-600 to-purple-600 dark:from-violet-500 dark:to-purple-500 text-white font-semibold hover:from-violet-700 hover:to-purple-700 transition-all hover:scale-[1.02] shadow-lg hover:shadow-violet-500/25"
+              >
+                <Download size={20} />
+                <span>Baixar Currículo (PDF)</span>
+              </a>
             </div>
 
-            <div className="mt-8 p-6 bg-[#535353]/10 dark:bg-[#292929]/80 backdrop-blur-sm rounded-lg border border-[#7c7c7c]/30 dark:border-[#535353]">
+            {/* Card disponível com verde */}
+            <div className="mt-8 p-6 bg-emerald-500/10 dark:bg-emerald-500/10 backdrop-blur-sm rounded-lg border border-emerald-500/30">
               <div className="flex items-start gap-3">
-                <div className="w-3 h-3 bg-[#535353] dark:bg-[#7c7c7c] rounded-full mt-1 animate-pulse" />
+                <div className="w-3 h-3 bg-emerald-500 rounded-full mt-1 animate-pulse shadow-lg shadow-emerald-500/50" />
                 <div>
-                  <h4 className="font-semibold text-[#000000] dark:text-white mb-2">
+                  <h4 className="font-semibold text-emerald-700 dark:text-emerald-400 mb-2">
                     💼 Disponível para trabalho
                   </h4>
                   <p className="text-[#535353] dark:text-[#a5a5a5] text-sm">
