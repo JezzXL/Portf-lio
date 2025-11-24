@@ -1,7 +1,10 @@
-import { motion } from 'framer-motion';
-import { ExternalLink, Github, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { ExternalLink, Github } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import type { Project } from '../types';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const projects: Project[] = [
   {
@@ -11,7 +14,7 @@ const projects: Project[] = [
     technologies: ['React', 'TypeScript', 'Tailwind', 'Zustand'],
     github: 'https://github.com/JezzXL/TechStore-E-commerce',
     demo: 'https://tech-store-e-commerce-blue.vercel.app/',
-    image: 'https://raw.githubusercontent.com/JezzXL/TechStore-E-commerce/refs/heads/main/screenshots/home.png',
+    image: 'https://raw.githubusercontent.com/JezzXL/TechStore-E-commerce/refs/heads/main/screenshots/favoritos.png',
   },
   {
     id: 2,
@@ -43,66 +46,70 @@ const projects: Project[] = [
 ];
 
 const Projects = () => {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [progress, setProgress] = useState(0);
 
-  const scrollToProject = (index: number) => {
-    if (scrollRef.current) {
-      const cardWidth = scrollRef.current.offsetWidth;
-      scrollRef.current.scrollTo({
-        left: cardWidth * index,
-        behavior: 'smooth'
-      });
-      setCurrentIndex(index);
-    }
-  };
+  useEffect(() => {
+    const section = sectionRef.current;
+    const container = containerRef.current;
 
-  const handleScroll = () => {
-    if (scrollRef.current) {
-      const scrollLeft = scrollRef.current.scrollLeft;
-      const cardWidth = scrollRef.current.offsetWidth;
-      const newIndex = Math.round(scrollLeft / cardWidth);
-      setCurrentIndex(newIndex);
-    }
-  };
+    if (!section || !container) return;
 
-  const goNext = () => {
-    if (currentIndex < projects.length - 1) {
-      scrollToProject(currentIndex + 1);
-    }
-  };
+    // Calcular o total de scroll horizontal necessário
+    const totalWidth = container.scrollWidth - window.innerWidth;
 
-  const goPrev = () => {
-    if (currentIndex > 0) {
-      scrollToProject(currentIndex - 1);
-    }
-  };
+    // Criar animação GSAP horizontal
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: () => `+=${totalWidth}`,
+        scrub: 1,
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          setProgress(self.progress);
+        }
+      }
+    });
+
+    // Animar o container horizontalmente
+    tl.to(container, {
+      x: () => -totalWidth,
+      ease: 'none'
+    });
+
+    // Cleanup
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, []);
 
   return (
-    <section id="projects" className="min-h-screen bg-[#a5a5a5]/10 dark:bg-[#050505] py-20">
-      <div className="h-full flex flex-col">
-        
-        {/* Header */}
-        <div className="text-center mb-8 px-4">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-bold text-[#000000] dark:text-white mb-2"
-          >
+    <section 
+      ref={sectionRef}
+      id="projects" 
+      className="relative h-screen bg-[#a5a5a5]/10 dark:bg-[#050505] overflow-hidden"
+    >
+      {/* Header fixo */}
+      <div className="absolute top-0 left-0 right-0 z-20 pt-24 pb-6 px-4 bg-gradient-to-b from-[#a5a5a5]/10 via-[#a5a5a5]/10 to-transparent dark:from-[#050505] dark:via-[#050505] dark:to-transparent">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-[#000000] dark:text-white mb-2">
             Meus Projetos
-          </motion.h2>
+          </h2>
           <div className="w-20 h-1 bg-blue-500 mx-auto rounded-full mb-2"></div>
-          <p className="text-[#535353] dark:text-[#a5a5a5]">
-            Arraste ou use as setas para navegar
+          <p className="text-[#535353] dark:text-[#a5a5a5] mb-4">
+            Role para explorar meus trabalhos
           </p>
 
-          {/* Barra de progresso com azul */}
-          <div className="max-w-md mx-auto mt-4">
+          {/* Barra de progresso */}
+          <div className="max-w-md mx-auto">
             <div className="h-1 bg-[#a5a5a5]/30 dark:bg-[#535353]/30 rounded-full overflow-hidden">
-              <motion.div
-                className="h-full bg-blue-500 rounded-full"
-                animate={{ width: `${((currentIndex + 1) / projects.length) * 100}%` }}
-                transition={{ duration: 0.3 }}
+              <div 
+                className="h-full bg-blue-500 rounded-full transition-all duration-300"
+                style={{ width: `${progress * 100}%` }}
               />
             </div>
             <div className="flex justify-between mt-1 text-xs text-[#7c7c7c] dark:text-[#a5a5a5]">
@@ -111,54 +118,30 @@ const Projects = () => {
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Container de scroll horizontal */}
-        <div className="relative flex-1">
-          {/* Botão Anterior com azul */}
-          <button
-            onClick={goPrev}
-            disabled={currentIndex === 0}
-            className={`absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white dark:bg-[#292929] shadow-lg border border-[#a5a5a5]/30 dark:border-[#535353] transition-all ${
-              currentIndex === 0 
-                ? 'opacity-30 cursor-not-allowed' 
-                : 'hover:scale-110 hover:bg-blue-500 hover:text-white hover:border-blue-500'
-            }`}
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
+      {/* Container horizontal */}
+      <div className="h-full flex items-center">
+        <div 
+          ref={containerRef}
+          className="flex gap-8 px-[50vw]"
+        >
+          {projects.map((project, index) => {
+            const colors = [
+              'bg-blue-500/20 text-blue-700 dark:text-blue-400 border-blue-500/30',
+              'bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border-emerald-500/30',
+              'bg-violet-500/20 text-violet-700 dark:text-violet-400 border-violet-500/30',
+              'bg-amber-500/20 text-amber-700 dark:text-amber-400 border-amber-500/30',
+            ];
 
-          {/* Botão Próximo com azul */}
-          <button
-            onClick={goNext}
-            disabled={currentIndex === projects.length - 1}
-            className={`absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white dark:bg-[#292929] shadow-lg border border-[#a5a5a5]/30 dark:border-[#535353] transition-all ${
-              currentIndex === projects.length - 1 
-                ? 'opacity-30 cursor-not-allowed' 
-                : 'hover:scale-110 hover:bg-blue-500 hover:text-white hover:border-blue-500'
-            }`}
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
-
-          {/* Scroll Container */}
-          <div
-            ref={scrollRef}
-            onScroll={handleScroll}
-            className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide h-full"
-            style={{ 
-              scrollbarWidth: 'none', 
-              msOverflowStyle: 'none',
-              WebkitOverflowScrolling: 'touch'
-            }}
-          >
-            {projects.map((project, index) => (
+            return (
               <div
                 key={project.id}
-                className="flex-shrink-0 w-full snap-center px-4 md:px-16 lg:px-24 flex items-center justify-center"
+                className="flex-shrink-0 w-[80vw] max-w-5xl"
               >
-                <div className="max-w-6xl w-full flex flex-col lg:flex-row gap-8 items-center bg-white dark:bg-[#292929] rounded-3xl p-6 lg:p-10 shadow-2xl border border-[#a5a5a5]/30 dark:border-[#535353]">
+                <div className="bg-white dark:bg-[#292929] rounded-3xl overflow-hidden shadow-2xl border border-[#a5a5a5]/30 dark:border-[#535353] h-full flex flex-col lg:flex-row">
                   {/* Imagem */}
-                  <div className="w-full lg:w-3/5 h-48 md:h-64 lg:h-[350px] rounded-2xl overflow-hidden">
+                  <div className="w-full lg:w-3/5 h-64 lg:h-auto">
                     <img
                       src={project.image}
                       alt={project.title}
@@ -167,13 +150,13 @@ const Projects = () => {
                   </div>
 
                   {/* Conteúdo */}
-                  <div className="w-full lg:w-2/5 space-y-4">
-                    {/* Número do projeto com azul */}
-                    <span className="text-6xl lg:text-8xl font-bold text-blue-500/20 leading-none block">
+                  <div className="w-full lg:w-2/5 p-6 lg:p-8 flex flex-col justify-center space-y-4">
+                    {/* Número */}
+                    <span className="text-6xl lg:text-7xl font-bold text-blue-500/20 leading-none">
                       0{index + 1}
                     </span>
 
-                    <h3 className="text-2xl lg:text-3xl font-bold text-[#000000] dark:text-white -mt-8 lg:-mt-12">
+                    <h3 className="text-2xl lg:text-3xl font-bold text-[#000000] dark:text-white -mt-8 lg:-mt-10">
                       {project.title}
                     </h3>
 
@@ -181,24 +164,16 @@ const Projects = () => {
                       {project.description}
                     </p>
 
-                    {/* Tecnologias com cores variadas */}
+                    {/* Tecnologias */}
                     <div className="flex flex-wrap gap-2">
-                      {project.technologies.slice(0, 4).map((tech, techIndex) => {
-                        const colors = [
-                          'bg-blue-500/20 text-blue-700 dark:text-blue-400 border-blue-500/30',
-                          'bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border-emerald-500/30',
-                          'bg-violet-500/20 text-violet-700 dark:text-violet-400 border-violet-500/30',
-                          'bg-amber-500/20 text-amber-700 dark:text-amber-400 border-amber-500/30',
-                        ];
-                        return (
-                          <span
-                            key={tech}
-                            className={`px-3 py-1 rounded-full text-xs font-medium border ${colors[techIndex % colors.length]}`}
-                          >
-                            {tech}
-                          </span>
-                        );
-                      })}
+                      {project.technologies.slice(0, 4).map((tech, techIndex) => (
+                        <span
+                          key={tech}
+                          className={`px-3 py-1 rounded-full text-xs font-medium border ${colors[techIndex % colors.length]}`}
+                        >
+                          {tech}
+                        </span>
+                      ))}
                     </div>
 
                     {/* Links */}
@@ -227,24 +202,26 @@ const Projects = () => {
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
+      </div>
 
-        {/* Indicadores com azul */}
-        <div className="flex justify-center gap-3 mt-6 pb-4">
-          {projects.map((_, index) => (
-            <button
+      {/* Indicadores */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3">
+        {projects.map((_, index) => {
+          const isActive = progress >= index / projects.length && progress < (index + 1) / projects.length;
+          return (
+            <div
               key={index}
-              onClick={() => scrollToProject(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                currentIndex === index 
-                  ? 'bg-blue-500 scale-125' 
-                  : 'bg-[#a5a5a5] dark:bg-[#535353] hover:bg-blue-400'
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                isActive 
+                  ? 'bg-blue-500 scale-150' 
+                  : 'bg-[#a5a5a5] dark:bg-[#535353]'
               }`}
             />
-          ))}
-        </div>
+          );
+        })}
       </div>
     </section>
   );
