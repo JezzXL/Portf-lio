@@ -16,9 +16,9 @@ const skills: Skill[] = [
 const getLevelStyle = (level: string) => {
   switch (level) {
     case 'advanced':
-      return 'bg-[#535353]/20 dark:bg-[#535353]/40 text-[#000000] dark:text-[#a5a5a5] border border-[#535353]/30';
+      return 'bg-emerald-500/20 dark:bg-emerald-500/30 text-emerald-700 dark:text-emerald-400 border border-emerald-500/40';
     case 'intermediate':
-      return 'bg-[#7c7c7c]/20 dark:bg-[#7c7c7c]/30 text-[#292929] dark:text-[#7c7c7c] border border-[#7c7c7c]/30';
+      return 'bg-amber-500/20 dark:bg-amber-500/30 text-amber-700 dark:text-amber-400 border border-amber-500/40';
     default:
       return 'bg-[#a5a5a5]/20 dark:bg-[#292929] text-[#535353] dark:text-[#a5a5a5] border border-[#a5a5a5]/30';
   }
@@ -75,7 +75,7 @@ const About = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-[#000000] dark:text-white mb-4">
             Sobre Mim
           </h2>
-          <div className="w-20 h-1 bg-[#535353] dark:bg-[#7c7c7c] mx-auto rounded-full"></div>
+          <div className="w-20 h-1 bg-blue-500 mx-auto rounded-full"></div>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-start">
@@ -89,7 +89,7 @@ const About = () => {
             <div className="prose prose-lg dark:prose-invert">
               <p className="text-lg text-[#535353] dark:text-[#a5a5a5] leading-relaxed">
                 Sou um{' '}
-                <span className="font-semibold text-[#000000] dark:text-[#7c7c7c]">
+                <span className="font-semibold text-blue-600 dark:text-blue-400">
                   desenvolvedor web
                 </span>{' '}
                 focado em frontend.
@@ -110,16 +110,16 @@ const About = () => {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="p-4 bg-[#a5a5a5]/10 dark:bg-[#292929] rounded-lg border border-[#a5a5a5]/30 dark:border-[#535353] hover:border-[#535353] dark:hover:border-[#7c7c7c] transition-colors"
+                    className="p-4 bg-[#a5a5a5]/10 dark:bg-[#292929] rounded-lg border border-[#a5a5a5]/30 dark:border-[#535353] hover:border-blue-500 dark:hover:border-blue-400 transition-colors"
                   >
-                    <Icon className="w-8 h-8 text-[#535353] dark:text-[#7c7c7c] mb-2" />
+                    <Icon className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
                     <h4 className="font-semibold text-[#000000] dark:text-white text-sm mb-1">
                       {item.title}
                     </h4>
                     <p className="text-xs text-[#7c7c7c] dark:text-[#a5a5a5]">
                       {item.description}
                     </p>
-                    <p className="text-xs text-[#535353] dark:text-[#7c7c7c] font-medium mt-1">
+                    <p className="text-xs text-blue-600 dark:text-blue-400 font-medium mt-1">
                       {item.detail}
                     </p>
                   </motion.div>
@@ -135,7 +135,7 @@ const About = () => {
             className="space-y-6"
           >
             <div className="flex items-center gap-3 mb-6">
-              <Code2 className="w-8 h-8 text-[#535353] dark:text-[#7c7c7c]" />
+              <Code2 className="w-8 h-8 text-blue-600 dark:text-blue-400" />
               <h3 className="text-2xl font-semibold text-[#000000] dark:text-white">
                 Habilidades Técnicas
               </h3>
@@ -169,11 +169,11 @@ const About = () => {
 
             <div className="pt-4 flex gap-4 text-xs text-[#7c7c7c] dark:text-[#a5a5a5]">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-[#535353] dark:bg-[#7c7c7c]"></div>
+                <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
                 <span>Avançado</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-[#7c7c7c] dark:bg-[#a5a5a5]"></div>
+                <div className="w-3 h-3 rounded-full bg-amber-500"></div>
                 <span>Intermediário</span>
               </div>
             </div>
