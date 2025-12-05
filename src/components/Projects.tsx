@@ -14,7 +14,7 @@ const projects: Project[] = [
     technologies: ['React', 'TypeScript', 'Tailwind', 'Zustand'],
     github: 'https://github.com/JezzXL/TechStore-E-commerce',
     demo: 'https://tech-store-e-commerce-blue.vercel.app/',
-    image: 'https://raw.githubusercontent.com/JezzXL/TechStore-E-commerce/refs/heads/main/screenshots/favoritos.png',
+    image: 'https://raw.githubusercontent.com/JezzXL/TechStore-E-commerce/refs/heads/main/screenshots/home.png',
   },
   {
     id: 2,
