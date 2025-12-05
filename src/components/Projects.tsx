@@ -43,6 +43,15 @@ const projects: Project[] = [
     demo: 'https://testegymsch.firebaseapp.com',
     image: 'https://raw.githubusercontent.com/JezzXL/Site-GYM/refs/heads/main/src/assets/Home.png',
   },
+  {
+  id: 5,
+  title: 'NEXUS - Tour Virtual 3D Imobiliário',
+  description: 'Landing page premium com tour virtual 3D interativo. Integração de modelo Blender GLB/GLTF, navegação inteligente por scroll ou botões, transições suaves entre 7 cômodos, cidade 3D animada no Hero, iluminação realista com sombras, e cards informativos com timing personalizado.',
+  technologies: ['React', 'TypeScript', 'Three.js', 'WebGL', 'Tailwind', 'Vite'],
+  github: 'https://github.com/JezzXL/Landing-Page',
+  demo: 'https://construtoranexus.vercel.app',
+  image: 'https://raw.githubusercontent.com/JezzXL/Portf-lio/refs/heads/main/public/Nexus.png',
+  }
 ];
 
 const Projects = () => {
