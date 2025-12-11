@@ -6,6 +6,19 @@ import type { Project } from '../types';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Adicionar estilo para esconder scrollbar
+const style = document.createElement('style');
+style.textContent = `
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+`;
+document.head.appendChild(style);
+
 const projects: Project[] = [
   {
     id: 1,
@@ -65,33 +78,46 @@ const Projects = () => {
 
     if (!section || !container) return;
 
-    // Calcular o total de scroll horizontal necessário
-    const totalWidth = container.scrollWidth - window.innerWidth;
+    // Função para configurar a animação
+    const setupAnimation = () => {
+      // Limpar ScrollTriggers existentes
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
 
-    // Criar animação GSAP horizontal
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: () => `+=${totalWidth}`,
-        scrub: 1,
-        pin: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          setProgress(self.progress);
-        }
+      // No mobile, não aplicar scroll horizontal
+      if (window.innerWidth < 1024) {
+        return;
       }
-    });
 
-    // Animar o container horizontalmente
-    tl.to(container, {
-      x: () => -totalWidth,
-      ease: 'none'
-    });
+      const totalWidth = container.scrollWidth - window.innerWidth;
 
-    // Cleanup
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: () => `+=${totalWidth}`,
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            setProgress(self.progress);
+          }
+        }
+      });
+
+      tl.to(container, {
+        x: () => -totalWidth,
+        ease: 'none'
+      });
+    };
+
+    setupAnimation();
+
+    // Reconfigurar no resize
+    window.addEventListener('resize', setupAnimation);
+
     return () => {
+      window.removeEventListener('resize', setupAnimation);
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
@@ -100,17 +126,17 @@ const Projects = () => {
     <section 
       ref={sectionRef}
       id="projects" 
-      className="relative h-screen bg-[#a5a5a5]/10 dark:bg-[#050505] overflow-hidden"
+      className="relative lg:h-screen bg-[#a5a5a5]/10 dark:bg-[#050505] py-20 lg:py-0"
     >
       {/* Header fixo */}
-      <div className="absolute top-0 left-0 right-0 z-20 pt-24 pb-6 px-4 bg-gradient-to-b from-[#a5a5a5]/10 via-[#a5a5a5]/10 to-transparent dark:from-[#050505] dark:via-[#050505] dark:to-transparent">
+      <div className="relative lg:absolute top-0 left-0 right-0 z-20 pt-8 lg:pt-24 pb-6 px-4 bg-gradient-to-b from-[#a5a5a5]/10 via-[#a5a5a5]/10 to-transparent dark:from-[#050505] dark:via-[#050505] dark:to-transparent">
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-[#000000] dark:text-white mb-2">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#000000] dark:text-white mb-2">
             Meus Projetos
           </h2>
           <div className="w-20 h-1 bg-blue-500 mx-auto rounded-full mb-2"></div>
-          <p className="text-[#535353] dark:text-[#a5a5a5] mb-4">
-            Role para explorar meus trabalhos
+          <p className="text-[#535353] dark:text-[#a5a5a5] mb-4 text-sm md:text-base">
+            {window.innerWidth >= 1024 ? 'Role para explorar meus trabalhos' : 'Arraste para ver mais projetos'}
           </p>
 
           {/* Barra de progresso */}
@@ -129,11 +155,23 @@ const Projects = () => {
         </div>
       </div>
 
-      {/* Container horizontal */}
-      <div className="h-full flex items-center">
+      {/* Container horizontal para desktop / scroll horizontal no mobile */}
+      <div className="h-full flex items-center mt-0 lg:mt-0">
         <div 
           ref={containerRef}
-          className="flex gap-8 px-[50vw]"
+          className="flex lg:flex-row gap-8 lg:gap-8 px-4 lg:px-[50vw] w-full lg:w-auto overflow-x-auto lg:overflow-x-visible snap-x snap-mandatory scrollbar-hide pb-4 lg:pb-0"
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            WebkitOverflowScrolling: 'touch'
+          }}
+          onScroll={(e) => {
+            if (window.innerWidth < 1024) {
+              const scrollLeft = e.currentTarget.scrollLeft;
+              const newProgress = scrollLeft / (e.currentTarget.scrollWidth - e.currentTarget.clientWidth);
+              setProgress(newProgress);
+            }
+          }}
         >
           {projects.map((project, index) => {
             const colors = [
@@ -146,11 +184,11 @@ const Projects = () => {
             return (
               <div
                 key={project.id}
-                className="flex-shrink-0 w-[80vw] max-w-5xl"
+                className="flex-shrink-0 w-[85vw] sm:w-[75vw] lg:w-[80vw] max-w-full lg:max-w-5xl snap-center"
               >
-                <div className="bg-white dark:bg-[#292929] rounded-3xl overflow-hidden shadow-2xl border border-[#a5a5a5]/30 dark:border-[#535353] h-full flex flex-col lg:flex-row">
+                <div className="bg-white dark:bg-[#292929] rounded-3xl overflow-hidden shadow-2xl border border-[#a5a5a5]/30 dark:border-[#535353] h-full flex flex-col">
                   {/* Imagem */}
-                  <div className="w-full lg:w-3/5 h-64 lg:h-auto">
+                  <div className="w-full h-48 sm:h-56 md:h-64 lg:h-auto">
                     <img
                       src={project.image}
                       alt={project.title}
@@ -159,17 +197,17 @@ const Projects = () => {
                   </div>
 
                   {/* Conteúdo */}
-                  <div className="w-full lg:w-2/5 p-6 lg:p-8 flex flex-col justify-center space-y-4">
+                  <div className="w-full p-4 sm:p-6 lg:p-8 flex flex-col justify-center space-y-3 lg:space-y-4">
                     {/* Número */}
-                    <span className="text-6xl lg:text-7xl font-bold text-blue-500/20 leading-none">
+                    <span className="text-4xl sm:text-5xl lg:text-7xl font-bold text-blue-500/20 leading-none">
                       0{index + 1}
                     </span>
 
-                    <h3 className="text-2xl lg:text-3xl font-bold text-[#000000] dark:text-white -mt-8 lg:-mt-10">
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#000000] dark:text-white -mt-6 sm:-mt-8 lg:-mt-10">
                       {project.title}
                     </h3>
 
-                    <p className="text-[#535353] dark:text-[#a5a5a5] text-sm lg:text-base leading-relaxed">
+                    <p className="text-[#535353] dark:text-[#a5a5a5] text-xs sm:text-sm lg:text-base leading-relaxed">
                       {project.description}
                     </p>
 
@@ -178,7 +216,7 @@ const Projects = () => {
                       {project.technologies.slice(0, 4).map((tech, techIndex) => (
                         <span
                           key={tech}
-                          className={`px-3 py-1 rounded-full text-xs font-medium border ${colors[techIndex % colors.length]}`}
+                          className={`px-2 sm:px-3 py-1 rounded-full text-xs font-medium border ${colors[techIndex % colors.length]}`}
                         >
                           {tech}
                         </span>
@@ -186,14 +224,14 @@ const Projects = () => {
                     </div>
 
                     {/* Links */}
-                    <div className="flex gap-3 pt-2">
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-2">
                       <a
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-5 py-2.5 bg-[#000000] dark:bg-[#535353] text-white rounded-full hover:bg-[#292929] dark:hover:bg-[#7c7c7c] transition-all hover:scale-105 text-sm font-medium"
+                        className="flex items-center justify-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-[#000000] dark:bg-[#535353] text-white rounded-full hover:bg-[#292929] dark:hover:bg-[#7c7c7c] transition-all hover:scale-105 text-xs sm:text-sm font-medium"
                       >
-                        <Github size={18} />
+                        <Github size={16} />
                         Código
                       </a>
                       {project.demo && (
@@ -201,9 +239,9 @@ const Projects = () => {
                           href={project.demo}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 dark:bg-blue-500 text-white rounded-full hover:bg-blue-700 dark:hover:bg-blue-600 transition-all hover:scale-105 text-sm font-medium shadow-lg hover:shadow-blue-500/25"
+                          className="flex items-center justify-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-blue-600 dark:bg-blue-500 text-white rounded-full hover:bg-blue-700 dark:hover:bg-blue-600 transition-all hover:scale-105 text-xs sm:text-sm font-medium shadow-lg hover:shadow-blue-500/25"
                         >
-                          <ExternalLink size={18} />
+                          <ExternalLink size={16} />
                           Demo
                         </a>
                       )}
@@ -217,7 +255,7 @@ const Projects = () => {
       </div>
 
       {/* Indicadores */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3">
+      <div className="relative lg:absolute bottom-4 lg:bottom-8 left-1/2 -translate-x-1/2 flex gap-3 mt-8 lg:mt-0">
         {projects.map((_, index) => {
           const isActive = progress >= index / projects.length && progress < (index + 1) / projects.length;
           return (
