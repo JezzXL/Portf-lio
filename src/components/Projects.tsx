@@ -255,7 +255,7 @@ const Projects = () => {
       </div>
 
       {/* Indicadores */}
-      <div className="relative lg:absolute bottom-4 lg:bottom-8 left-1/2 -translate-x-1/2 flex gap-3 mt-8 lg:mt-0">
+       <div className="flex justify-center items-center gap-3 mt-6 lg:absolute lg:bottom-8 lg:left-1/2 lg:-translate-x-1/2">
         {projects.map((_, index) => {
           const isActive = progress >= index / projects.length && progress < (index + 1) / projects.length;
           return (
