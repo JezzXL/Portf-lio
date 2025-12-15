@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
+import Experience from './components/Experience'; // ✨ Importar
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import WhatsAppButton from './components/WhatsAppButton';
@@ -20,7 +21,6 @@ const Footer = () => (
 function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
-  // Carrega tema salvo
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
     
@@ -48,6 +48,7 @@ function App() {
       <main>
         <Hero />
         <About />
+        <Experience /> 
         <Projects />
         <Contact />
       </main>
