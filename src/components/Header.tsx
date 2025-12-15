@@ -17,7 +17,7 @@ const Header = ({ currentTheme, onThemeToggle }: HeaderProps) => {
       setScrolled(window.scrollY > 20);
 
       // Detectar seção ativa
-      const sections = ['hero', 'about', 'projects', 'contact'];
+      const sections = ['hero', 'about', 'experience', 'projects', 'contact'];
       const current = sections.find(section => {
         const element = document.getElementById(section);
         if (element) {
@@ -36,6 +36,7 @@ const Header = ({ currentTheme, onThemeToggle }: HeaderProps) => {
   const navItems = [
     { id: 'hero', label: 'Home' },
     { id: 'about', label: 'Sobre' },
+    { id: 'experience', label: 'Experiência' },
     { id: 'projects', label: 'Projetos' },
     { id: 'contact', label: 'Contato' },
   ];
