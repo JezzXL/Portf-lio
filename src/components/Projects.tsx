@@ -127,7 +127,6 @@ const Projects = () => {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#000000] dark:text-white mb-2">
             Meus Projetos
           </h2>
-          <div className="w-20 h-1 bg-blue-500 mx-auto rounded-full mb-2"></div>
           <p className="text-[#535353] dark:text-[#a5a5a5] mb-4 text-sm md:text-base">
             {window.innerWidth >= 1024 ? 'Role para explorar meus trabalhos' : 'Arraste para ver mais projetos'}
           </p>
