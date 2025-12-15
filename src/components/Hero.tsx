@@ -172,7 +172,7 @@ const Hero = () => {
 
   const socialLinks = [
     { icon: Github, href: 'https://github.com/JezzXL', label: 'GitHub' },
-    { icon: Linkedin, href: 'https://www.linkedin.com/in/davydwillianp/', label: 'LinkedIn', color: 'hover:text-blue-500' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/davydwillianp/', label: 'LinkedIn', color: 'hover:text-purple-500' },
     { icon: Mail, href: 'mailto:davydsantos.gt@gmail.com', label: 'Email', color: 'hover:text-red-500' },
   ];
 
@@ -245,8 +245,8 @@ const Hero = () => {
 
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-[#000000] dark:text-white leading-tight">
             Olá, eu sou{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-400 dark:to-violet-400">
-              Davyd Developer
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-fuchsia-950 dark:from-purple-400 dark:to-violet-400">
+              Davyd Developer 
             </span>
           </h1>
 
@@ -257,8 +257,8 @@ const Hero = () => {
             className="text-xl md:text-2xl text-[#535353] dark:text-[#a5a5a5] max-w-3xl mx-auto"
           >
             Desenvolvedor{' '}
-            <span className="font-semibold text-blue-600 dark:text-blue-400">
-              Front end
+            <span className="font-semibold text-purple-950 dark:text-violet-400"> 
+              Full Stack
             </span>{' '}
             apaixonado por criar experiências digitais incríveis com React,
             TypeScript e tecnologias modernas.
@@ -273,7 +273,7 @@ const Hero = () => {
             {/* Botão principal com azul */}
             <button
               onClick={scrollToProjects}
-              className="group inline-flex items-center px-8 py-4 bg-blue-600 dark:bg-blue-500 text-white rounded-full hover:bg-blue-700 dark:hover:bg-blue-600 transition-all hover:scale-105 shadow-lg hover:shadow-blue-500/25 font-semibold"
+              className="group inline-flex items-center px-8 py-4 bg-emerald-500 dark:bg-emerald-300 text-white rounded-full hover:bg-emerald-600 dark:hover:bg-emerald-600 transition-all hover:scale-105 shadow-lg hover:shadow-emerald-500/25 font-semibold"
             >
               Ver Meus Projetos
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -291,7 +291,7 @@ const Hero = () => {
 
             <button
               onClick={scrollToContact}
-              className="inline-flex items-center px-8 py-4 bg-white/80 dark:bg-[#292929]/80 backdrop-blur-sm text-[#000000] dark:text-white border-2 border-[#535353] dark:border-[#535353] rounded-full hover:border-blue-500 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all hover:scale-105 shadow-lg font-semibold"
+              className="inline-flex items-center px-8 py-4 bg-white/80 dark:bg-[#292929]/80 backdrop-blur-sm text-[#000000] dark:text-white border-2 border-[#535353] dark:border-[#535353] rounded-full hover:border-violet-500 dark:hover:border-violet-400 hover:text-violet-400 dark:hover:text-violet-400 transition-all hover:scale-105 shadow-lg font-semibold"
             >
               Entre em Contato
             </button>

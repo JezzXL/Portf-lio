@@ -188,7 +188,7 @@ const Experience = () => {
           </motion.h2>
           <motion.div 
             variants={headerVariants}
-            className="w-20 h-1 bg-blue-500 mx-auto rounded-full mb-4"
+            className="w-20 h-1 bg-purple-500 mx-auto rounded-full mb-4"
           />
           <motion.p 
             variants={headerVariants}
@@ -206,7 +206,7 @@ const Experience = () => {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={timelineVariants}
-            className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-blue-500 via-violet-500 to-blue-500 origin-top"
+            className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-purple-500 via-violet-500 to-purple-500 origin-top"
           />
 
           {/* Experiências */}
@@ -236,10 +236,10 @@ const Experience = () => {
                         scale: 1.02,
                         transition: { duration: 0.2 }
                       }}
-                      className="bg-[#a5a5a5]/10 dark:bg-[#292929] rounded-2xl p-6 shadow-lg border border-[#a5a5a5]/30 dark:border-[#535353] transition-all duration-300 hover:shadow-xl hover:border-blue-500/40 dark:hover:border-blue-400/40"
+                      className="bg-[#a5a5a5]/10 dark:bg-[#292929] rounded-2xl p-6 shadow-lg border border-[#a5a5a5]/30 dark:border-[#535353] transition-all duration-300 hover:shadow-xl hover:border-purple-500/40 dark:hover:border-purple-400/40"
                       style={{
                         boxShadow: hoveredCard === exp.id 
-                          ? '0 20px 40px rgba(59, 130, 246, 0.2)' 
+                          ? '0 20px 40px rgba(124, 58, 237, 0.2)' 
                           : undefined
                       }}
                     >
@@ -252,8 +252,8 @@ const Experience = () => {
                           variants={iconVariants}
                           className="relative"
                         >
-                          <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-violet-600 rounded-lg blur-sm opacity-50" />
-                          <div className="relative bg-gradient-to-r from-blue-600 to-violet-600 p-3 rounded-lg">
+                          <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-violet-600 rounded-lg blur-sm opacity-50" />
+                          <div className="relative bg-gradient-to-r from-purple-600 to-violet-600 p-3 rounded-lg">
                             <Icon className="w-6 h-6 text-white" />
                           </div>
                         </motion.div>
@@ -262,7 +262,7 @@ const Experience = () => {
                           <h3 className="text-xl font-bold text-[#000000] dark:text-white mb-1">
                             {exp.title}
                           </h3>
-                          <p className="text-blue-600 dark:text-blue-400 font-medium mb-2">
+                          <p className="text-purple-600 dark:text-purple-400 font-medium mb-2">
                             {exp.company}
                           </p>
                           <div className="flex items-center gap-4 text-sm text-[#7c7c7c] dark:text-[#a5a5a5]">
@@ -285,7 +285,7 @@ const Experience = () => {
                       {/* Responsabilidades */}
                       <div className="mb-4">
                         <h4 className="text-sm font-semibold text-[#000000] dark:text-white mb-2 flex items-center gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                          <CheckCircle2 className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                           Principais Responsabilidades:
                         </h4>
                         <ul className="space-y-2">
@@ -297,7 +297,7 @@ const Experience = () => {
                               whileInView="visible"
                               viewport={{ once: true }}
                               variants={listItemVariants}
-                              className="text-sm text-[#535353] dark:text-[#a5a5a5] pl-6 relative before:content-[''] before:absolute before:left-0 before:top-2 before:w-2 before:h-2 before:bg-blue-500 before:rounded-full"
+                              className="text-sm text-[#535353] dark:text-[#a5a5a5] pl-6 relative before:content-[''] before:absolute before:left-0 before:top-2 before:w-2 before:h-2 before:bg-purple-500 before:rounded-full"
                             >
                               {resp}
                             </motion.li>
@@ -315,7 +315,7 @@ const Experience = () => {
                             whileInView="visible"
                             viewport={{ once: true }}
                             variants={skillVariants}
-                            className="px-3 py-1 bg-blue-500/10 dark:bg-blue-500/20 text-blue-700 dark:text-blue-400 rounded-full text-xs font-medium border border-blue-500/30"
+                            className="px-3 py-1 bg-purple-500/10 dark:bg-purple-500/20 text-purple-700 dark:text-purple-400 rounded-full text-xs font-medium border border-purple-500/30"
                           >
                             {skill}
                           </motion.span>
@@ -338,7 +338,7 @@ const Experience = () => {
                       }
                     }}
                     viewport={{ once: true }}
-                    className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-blue-600 to-violet-600 rounded-full items-center justify-center shadow-lg border-4 border-white dark:border-[#0a0a0a] z-10"
+                    className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-purple-600 to-violet-600 rounded-full items-center justify-center shadow-lg border-4 border-white dark:border-[#0a0a0a] z-10"
                   >
                     <Icon className="w-6 h-6 text-white" />
                   </motion.div>
@@ -359,7 +359,7 @@ const Experience = () => {
           variants={summaryVariants}
           className="mt-16 text-center"
         >
-          <div className="inline-block bg-gradient-to-r from-blue-600/10 to-violet-600/10 dark:from-blue-500/20 dark:to-violet-500/20 rounded-2xl p-6 border border-blue-500/30">
+          <div className="inline-block bg-gradient-to-r from-purple-600/10 to-violet-600/10 dark:from-purple-500/20 dark:to-violet-500/20 rounded-2xl p-6 border border-purple-500/30">
             <p className="text-[#535353] dark:text-[#a5a5a5] text-sm mb-2">
               Total de experiência profissional
             </p>
@@ -368,7 +368,7 @@ const Experience = () => {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1, delay: 0.3 }}
-              className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-400 dark:to-violet-400"
+              className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-violet-600 dark:from-purple-400 dark:to-violet-400"
             >
               8+
             </motion.p>

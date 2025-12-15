@@ -17,7 +17,7 @@ const Header = ({ currentTheme, onThemeToggle }: HeaderProps) => {
       setScrolled(window.scrollY > 20);
 
       // Detectar seção ativa
-      const sections = ['hero', 'about', 'experience', 'projects', 'contact'];
+      const sections = ['hero', 'about', 'projects', 'experience', 'contact'];
       const current = sections.find(section => {
         const element = document.getElementById(section);
         if (element) {
@@ -87,12 +87,12 @@ const Header = ({ currentTheme, onThemeToggle }: HeaderProps) => {
           >
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-violet-600 rounded-lg blur-sm opacity-50 group-hover:opacity-75 transition-opacity"></div>
-              <div className="relative bg-gradient-to-r from-blue-600 to-violet-600 p-2 rounded-lg">
+              <div className="relative bg-gradient-to-r from-violet-800 to-violet-600 p-2 rounded-lg">
                 <Code2 className="w-5 h-5 text-white" />
               </div>
             </div>
             <div className="flex flex-col items-start">
-              <span className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-400 dark:to-violet-400">
+              <span className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-violet-800 to-violet-600 dark:from-violet-600 dark:to-violet-400">
                 Davyd
               </span>
               <span className="text-xs text-[#7c7c7c] dark:text-[#a5a5a5] -mt-1">
@@ -109,7 +109,7 @@ const Header = ({ currentTheme, onThemeToggle }: HeaderProps) => {
                 onClick={() => scrollToSection(item.id)}
                 className={`relative px-4 py-2 rounded-lg font-medium transition-all ${
                   activeSection === item.id
-                    ? 'text-blue-600 dark:text-blue-400'
+                    ? 'text-violet-600 dark:text-violet-400'
                     : 'text-[#535353] dark:text-[#a5a5a5] hover:text-[#000000] dark:hover:text-white'
                 }`}
               >
@@ -151,7 +151,7 @@ const Header = ({ currentTheme, onThemeToggle }: HeaderProps) => {
                     exit={{ rotate: -90, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <Moon size={20} className="text-blue-600" />
+                    <Moon size={20} className="text-purple-600" />
                   </motion.div>
                 )}
               </AnimatePresence>

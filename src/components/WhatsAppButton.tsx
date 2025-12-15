@@ -21,7 +21,7 @@ const WhatsAppButton = () => {
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="group relative w-16 h-16 bg-[#535353] hover:bg-[#7c7c7c] dark:bg-[#292929] dark:hover:bg-[#535353] text-white rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 flex items-center justify-center"
+          className="group relative w-16 h-16 bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 text-white rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 flex items-center justify-center"
           aria-label="WhatsApp"
         >
           <AnimatePresence mode="wait">
@@ -50,7 +50,7 @@ const WhatsAppButton = () => {
           
           {/* Pulse Animation */}
           {!isOpen && (
-            <span className="absolute inset-0 rounded-full bg-[#535353] dark:bg-[#292929] animate-ping opacity-75" />
+            <span className="absolute inset-0 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-ping opacity-75" />
           )}
         </button>
 
@@ -60,11 +60,11 @@ const WhatsAppButton = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1.5 }}
-            className="absolute right-20 top-1/2 -translate-y-1/2 bg-[#292929] dark:bg-[#000000] text-white px-4 py-2 rounded-lg shadow-lg whitespace-nowrap text-sm font-medium hidden md:block border border-[#535353]"
+            className="absolute right-20 top-1/2 -translate-y-1/2 bg-emerald-600 dark:bg-emerald-500 text-white px-4 py-2 rounded-lg shadow-lg whitespace-nowrap text-sm font-medium hidden md:block border border-emerald-700 dark:border-emerald-400"
           >
             Fale comigo no WhatsApp
             <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full">
-              <div className="border-8 border-transparent border-l-[#292929] dark:border-l-[#000000]" />
+              <div className="border-8 border-transparent border-l-emerald-600 dark:border-l-emerald-500" />
             </div>
           </motion.div>
         )}
@@ -81,7 +81,7 @@ const WhatsAppButton = () => {
             className="fixed bottom-28 right-6 z-50 w-80 bg-white dark:bg-[#292929] rounded-2xl shadow-2xl overflow-hidden border border-[#a5a5a5]/30 dark:border-[#535353]"
           >
             {/* Header */}
-            <div className="bg-[#535353] dark:bg-[#000000] p-4 flex items-center gap-3">
+            <div className="bg-violet-700 dark:bg-purple-700 p-4 flex items-center gap-3">
               <div className="w-12 h-12 bg-white dark:bg-[#292929] rounded-full flex items-center justify-center">
                 <MessageCircle size={24} className="text-[#535353] dark:text-[#7c7c7c]" />
               </div>
@@ -108,14 +108,14 @@ const WhatsAppButton = () => {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full bg-[#535353] hover:bg-[#7c7c7c] dark:bg-[#535353] dark:hover:bg-[#7c7c7c] text-white font-semibold py-3 px-4 rounded-lg transition-colors text-center"
+                  className="block w-full bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors text-center"
                 >
                   Iniciar Conversa
                 </a>
               </div>
 
               <div className="flex items-center gap-2 text-xs text-[#7c7c7c] dark:text-[#a5a5a5]">
-                <div className="w-2 h-2 bg-[#535353] dark:bg-[#7c7c7c] rounded-full animate-pulse" />
+                <div className="w-2 h-2 bg-emerald-500 dark:bg-emerald-400 rounded-full animate-pulse" />
                 <span>Online agora</span>
               </div>
             </div>

@@ -234,7 +234,7 @@ const Projects = () => {
                           href={project.demo}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-full hover:bg-blue-700 dark:hover:bg-blue-600 transition-all hover:scale-105 text-xs sm:text-sm font-medium shadow-lg hover:shadow-blue-500/25"
+                          className="flex items-center justify-center gap-2 px-4 py-2 bg-emerald-600 dark:bg-emerald-500 text-white rounded-full hover:bg-blue-700 dark:hover:bg-blue-600 transition-all hover:scale-105 text-xs sm:text-sm font-medium shadow-lg hover:shadow-blue-500/25"
                         >
                           <ExternalLink size={14} />
                           Demo
@@ -255,19 +255,19 @@ const Projects = () => {
               rel="noopener noreferrer"
               className="block h-full group"
             >
-              <div className="bg-gradient-to-br from-blue-600/10 via-violet-600/10 to-purple-600/10 dark:from-blue-500/20 dark:via-violet-500/20 dark:to-purple-500/20 rounded-3xl overflow-hidden shadow-2xl border-2 border-dashed border-blue-500/40 dark:border-blue-400/40 h-full flex flex-col lg:flex-row items-center justify-center p-8 lg:p-12 hover:scale-[1.02] hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-300 hover:shadow-blue-500/25">
+              <div className="bg-gradient-to-br from-blue-600/10 via-violet-600/10 to-purple-600/10 dark:from-violet-500/20 dark:via-violet-500/20 dark:to-purple-500/20 rounded-3xl overflow-hidden shadow-2xl border-2 border-dashed border-purple-500/40 dark:border-violet-400/40 h-full flex flex-col lg:flex-row items-center justify-center p-8 lg:p-12 hover:scale-[1.02] hover:border-purple-500 dark:hover:border-violet-400 transition-all duration-300 hover:shadow-violet-500/25">
                 
                 <div className="text-center space-y-4 lg:space-y-6">
                   {/* Ícone GitHub com animação */}
                   <div className="relative inline-block">
                     <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-violet-600 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity"></div>
-                    <div className="relative bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-500 dark:to-violet-500 p-6 lg:p-8 rounded-full group-hover:scale-110 transition-transform duration-300">
+                    <div className="relative bg-gradient-to-r from-gray-950 to-violet-600 dark:from-violet-500 dark:to-gray-950 p-6 lg:p-8 rounded-full group-hover:scale-110 transition-transform duration-300">
                       <Github className="w-12 h-12 lg:w-16 lg:h-16 text-white" />
                     </div>
                   </div>
 
                   {/* Número especial */}
-                  <span className="block text-5xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-400 dark:to-violet-400">
+                  <span className="block text-5xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-green-300 dark:from-green-400 dark:to-emeral-400">
                     +10
                   </span>
 
@@ -286,19 +286,19 @@ const Projects = () => {
                     {['React', 'TypeScript', 'Node.js', 'Python', 'Next.js', 'Firebase'].map((tech) => (
                       <span
                         key={tech}
-                        className="px-3 py-1 bg-blue-500/10 dark:bg-blue-500/20 text-blue-700 dark:text-blue-400 rounded-full text-xs font-medium border border-blue-500/30"
+                        className="px-3 py-1 bg-violet-500/10 dark:bg-gray-500/20 text-violet-700 dark:text-violet-400 rounded-full text-xs font-medium border border-violet-500/30"
                       >
                         {tech}
                       </span>
                     ))}
-                    <span className="px-3 py-1 text-blue-600 dark:text-blue-400 text-xs font-bold">
+                    <span className="px-3 py-1 text-violet-600 dark:text-purple-400 text-xs font-bold">
                       e mais...
                     </span>
                   </div>
 
                   {/* CTA Button */}
                   <div className="pt-4">
-                    <span className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-500 dark:to-violet-500 text-white rounded-full font-semibold text-sm lg:text-base shadow-lg group-hover:shadow-blue-500/50 transition-all group-hover:gap-3">
+                    <span className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-950 to-violet-600 dark:from-violet-500 dark:to-gray-950 text-white rounded-full font-semibold text-sm lg:text-base shadow-lg group-hover:shadow-blue-500/50 transition-all group-hover:gap-3">
                       Visitar GitHub
                       <ExternalLink size={16} className="group-hover:translate-x-1 transition-transform" />
                     </span>
@@ -319,7 +319,7 @@ const Projects = () => {
               key={index}
               className={`w-2 h-2 rounded-full transition-all duration-300 ${
                 isActive 
-                  ? 'bg-blue-500 scale-150' 
+                  ? 'bg-violet-500 scale-150' 
                   : 'bg-[#a5a5a5] dark:bg-[#535353]'
               }`}
             />
