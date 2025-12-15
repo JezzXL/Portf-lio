@@ -6,7 +6,6 @@ import type { Project } from '../types';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Adicionar estilo para esconder scrollbar
 const style = document.createElement('style');
 style.textContent = `
   .scrollbar-hide::-webkit-scrollbar {
@@ -57,13 +56,13 @@ const projects: Project[] = [
     image: 'https://raw.githubusercontent.com/JezzXL/Site-GYM/refs/heads/main/src/assets/Home.png',
   },
   {
-  id: 5,
-  title: 'NEXUS - Tour Virtual 3D Imobiliário',
-  description: 'Landing page premium com tour virtual 3D interativo. Integração de modelo Blender GLB/GLTF, navegação inteligente por scroll ou botões, transições suaves entre 7 cômodos, cidade 3D animada no Hero, iluminação realista com sombras, e cards informativos com timing personalizado.',
-  technologies: ['React', 'TypeScript', 'Three.js', 'WebGL', 'Tailwind', 'Vite'],
-  github: 'https://github.com/JezzXL/Landing-Page',
-  demo: 'https://construtoranexus.vercel.app',
-  image: 'https://raw.githubusercontent.com/JezzXL/Portf-lio/refs/heads/main/public/Nexus.png',
+    id: 5,
+    title: 'NEXUS - Tour Virtual 3D Imobiliário',
+    description: 'Landing page premium com tour virtual 3D interativo. Integração de modelo Blender GLB/GLTF, navegação inteligente por scroll ou botões, transições suaves entre 7 cômodos, cidade 3D animada no Hero, iluminação realista com sombras, e cards informativos com timing personalizado.',
+    technologies: ['React', 'TypeScript', 'Three.js', 'WebGL', 'Tailwind', 'Vite'],
+    github: 'https://github.com/JezzXL/Landing-Page',
+    demo: 'https://construtoranexus.vercel.app',
+    image: 'https://raw.githubusercontent.com/JezzXL/Portf-lio/refs/heads/main/public/Nexus.png',
   }
 ];
 
@@ -78,12 +77,9 @@ const Projects = () => {
 
     if (!section || !container) return;
 
-    // Função para configurar a animação
     const setupAnimation = () => {
-      // Limpar ScrollTriggers existentes
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
 
-      // No mobile, não aplicar scroll horizontal
       if (window.innerWidth < 1024) {
         return;
       }
@@ -112,8 +108,6 @@ const Projects = () => {
     };
 
     setupAnimation();
-
-    // Reconfigurar no resize
     window.addEventListener('resize', setupAnimation);
 
     return () => {
@@ -128,7 +122,6 @@ const Projects = () => {
       id="projects" 
       className="relative lg:h-screen bg-[#a5a5a5]/10 dark:bg-[#050505] py-20 lg:py-0"
     >
-      {/* Header fixo */}
       <div className="relative lg:absolute top-0 left-0 right-0 z-20 pt-8 lg:pt-24 pb-6 px-4 bg-gradient-to-b from-[#a5a5a5]/10 via-[#a5a5a5]/10 to-transparent dark:from-[#050505] dark:via-[#050505] dark:to-transparent">
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#000000] dark:text-white mb-2">
@@ -139,7 +132,6 @@ const Projects = () => {
             {window.innerWidth >= 1024 ? 'Role para explorar meus trabalhos' : 'Arraste para ver mais projetos'}
           </p>
 
-          {/* Barra de progresso */}
           <div className="max-w-md mx-auto">
             <div className="h-1 bg-[#a5a5a5]/30 dark:bg-[#535353]/30 rounded-full overflow-hidden">
               <div 
@@ -149,13 +141,12 @@ const Projects = () => {
             </div>
             <div className="flex justify-between mt-1 text-xs text-[#7c7c7c] dark:text-[#a5a5a5]">
               <span>01</span>
-              <span>0{projects.length}</span>
+              <span>0{projects.length + 1}</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Container horizontal para desktop / scroll horizontal no mobile */}
       <div className="h-full flex items-center mt-0 lg:mt-0">
         <div 
           ref={containerRef}
@@ -184,11 +175,11 @@ const Projects = () => {
             return (
               <div
                 key={project.id}
-                className="flex-shrink-0 w-[85vw] sm:w-[75vw] lg:w-[80vw] max-w-full lg:max-w-5xl snap-center"
+                className="flex-shrink-0 w-[85vw] sm:w-[70vw] lg:w-[60vw] max-w-4xl snap-center"
               >
-                <div className="bg-white dark:bg-[#292929] rounded-3xl overflow-hidden shadow-2xl border border-[#a5a5a5]/30 dark:border-[#535353] h-full flex flex-col">
-                  {/* Imagem */}
-                  <div className="w-full h-48 sm:h-56 md:h-64 lg:h-auto">
+                <div className="bg-white dark:bg-[#292929] rounded-3xl overflow-hidden shadow-2xl border border-[#a5a5a5]/30 dark:border-[#535353] h-full flex flex-col lg:flex-row">
+                  {/* Imagem - 40% da largura no desktop */}
+                  <div className="w-full lg:w-[40%] h-48 sm:h-56 lg:h-auto">
                     <img
                       src={project.image}
                       alt={project.title}
@@ -196,42 +187,47 @@ const Projects = () => {
                     />
                   </div>
 
-                  {/* Conteúdo */}
-                  <div className="w-full p-4 sm:p-6 lg:p-8 flex flex-col justify-center space-y-3 lg:space-y-4">
+                  {/* Conteúdo - 60% da largura no desktop */}
+                  <div className="w-full lg:w-[60%] p-4 sm:p-5 lg:p-6 flex flex-col justify-center space-y-3">
                     {/* Número */}
-                    <span className="text-4xl sm:text-5xl lg:text-7xl font-bold text-blue-500/20 leading-none">
+                    <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-blue-500/20 leading-none">
                       0{index + 1}
                     </span>
 
-                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#000000] dark:text-white -mt-6 sm:-mt-8 lg:-mt-10">
+                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#000000] dark:text-white -mt-4 sm:-mt-6 line-clamp-2">
                       {project.title}
                     </h3>
 
-                    <p className="text-[#535353] dark:text-[#a5a5a5] text-xs sm:text-sm lg:text-base leading-relaxed">
+                    <p className="text-[#535353] dark:text-[#a5a5a5] text-xs sm:text-sm leading-relaxed line-clamp-3">
                       {project.description}
                     </p>
 
                     {/* Tecnologias */}
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1.5">
                       {project.technologies.slice(0, 4).map((tech, techIndex) => (
                         <span
                           key={tech}
-                          className={`px-2 sm:px-3 py-1 rounded-full text-xs font-medium border ${colors[techIndex % colors.length]}`}
+                          className={`px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-xs font-medium border ${colors[techIndex % colors.length]}`}
                         >
                           {tech}
                         </span>
                       ))}
+                      {project.technologies.length > 4 && (
+                        <span className="px-2 py-0.5 text-[#7c7c7c] dark:text-[#a5a5a5] text-xs">
+                          +{project.technologies.length - 4}
+                        </span>
+                      )}
                     </div>
 
                     {/* Links */}
-                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-2">
+                    <div className="flex flex-col sm:flex-row gap-2 pt-2">
                       <a
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-[#000000] dark:bg-[#535353] text-white rounded-full hover:bg-[#292929] dark:hover:bg-[#7c7c7c] transition-all hover:scale-105 text-xs sm:text-sm font-medium"
+                        className="flex items-center justify-center gap-2 px-4 py-2 bg-[#000000] dark:bg-[#535353] text-white rounded-full hover:bg-[#292929] dark:hover:bg-[#7c7c7c] transition-all hover:scale-105 text-xs sm:text-sm font-medium"
                       >
-                        <Github size={16} />
+                        <Github size={14} />
                         Código
                       </a>
                       {project.demo && (
@@ -239,9 +235,9 @@ const Projects = () => {
                           href={project.demo}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center justify-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-blue-600 dark:bg-blue-500 text-white rounded-full hover:bg-blue-700 dark:hover:bg-blue-600 transition-all hover:scale-105 text-xs sm:text-sm font-medium shadow-lg hover:shadow-blue-500/25"
+                          className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-full hover:bg-blue-700 dark:hover:bg-blue-600 transition-all hover:scale-105 text-xs sm:text-sm font-medium shadow-lg hover:shadow-blue-500/25"
                         >
-                          <ExternalLink size={16} />
+                          <ExternalLink size={14} />
                           Demo
                         </a>
                       )}
@@ -251,13 +247,74 @@ const Projects = () => {
               </div>
             );
           })}
+
+          {/* Card "Ver Mais Projetos" */}
+          <div className="flex-shrink-0 w-[85vw] sm:w-[70vw] lg:w-[60vw] max-w-4xl snap-center">
+            <a
+              href="https://github.com/JezzXL?tab=repositories"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block h-full group"
+            >
+              <div className="bg-gradient-to-br from-blue-600/10 via-violet-600/10 to-purple-600/10 dark:from-blue-500/20 dark:via-violet-500/20 dark:to-purple-500/20 rounded-3xl overflow-hidden shadow-2xl border-2 border-dashed border-blue-500/40 dark:border-blue-400/40 h-full flex flex-col lg:flex-row items-center justify-center p-8 lg:p-12 hover:scale-[1.02] hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-300 hover:shadow-blue-500/25">
+                
+                <div className="text-center space-y-4 lg:space-y-6">
+                  {/* Ícone GitHub com animação */}
+                  <div className="relative inline-block">
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-violet-600 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity"></div>
+                    <div className="relative bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-500 dark:to-violet-500 p-6 lg:p-8 rounded-full group-hover:scale-110 transition-transform duration-300">
+                      <Github className="w-12 h-12 lg:w-16 lg:h-16 text-white" />
+                    </div>
+                  </div>
+
+                  {/* Número especial */}
+                  <span className="block text-5xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-400 dark:to-violet-400">
+                    +10
+                  </span>
+
+                  {/* Título */}
+                  <h3 className="text-2xl lg:text-3xl font-bold text-[#000000] dark:text-white">
+                    Ver Mais Projetos
+                  </h3>
+
+                  {/* Descrição */}
+                  <p className="text-[#535353] dark:text-[#a5a5a5] text-sm lg:text-base max-w-md mx-auto">
+                    Explore meu repositório no GitHub para ver mais de 10 projetos desenvolvidos com diversas tecnologias
+                  </p>
+
+                  {/* Badges de tecnologias */}
+                  <div className="flex flex-wrap gap-2 justify-center pt-4">
+                    {['React', 'TypeScript', 'Node.js', 'Python', 'Next.js', 'Firebase'].map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-3 py-1 bg-blue-500/10 dark:bg-blue-500/20 text-blue-700 dark:text-blue-400 rounded-full text-xs font-medium border border-blue-500/30"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                    <span className="px-3 py-1 text-blue-600 dark:text-blue-400 text-xs font-bold">
+                      e mais...
+                    </span>
+                  </div>
+
+                  {/* CTA Button */}
+                  <div className="pt-4">
+                    <span className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-500 dark:to-violet-500 text-white rounded-full font-semibold text-sm lg:text-base shadow-lg group-hover:shadow-blue-500/50 transition-all group-hover:gap-3">
+                      Visitar GitHub
+                      <ExternalLink size={16} className="group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
 
-      {/* Indicadores */}
-       <div className="flex justify-center items-center gap-3 mt-6 lg:absolute lg:bottom-8 lg:left-1/2 lg:-translate-x-1/2">
-        {projects.map((_, index) => {
-          const isActive = progress >= index / projects.length && progress < (index + 1) / projects.length;
+      <div className="flex justify-center items-center gap-3 mt-6 lg:absolute lg:bottom-8 lg:left-1/2 lg:-translate-x-1/2">
+        {[...projects, { id: 'more' }].map((_, index) => {
+          const totalItems = projects.length + 1;
+          const isActive = progress >= index / totalItems && progress < (index + 1) / totalItems;
           return (
             <div
               key={index}
